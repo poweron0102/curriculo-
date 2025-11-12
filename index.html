@@ -8,32 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #d1d5db; /* text-gray-300 */
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.7rem;
-            top: 0.8rem;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            background-color: #4f46e5; /* indigo-600 */
-            border: 2px solid #1f2937; /* bg-gray-800 */
-        }
-        .card-gradient {
-            background: linear-gradient(145deg, #1f2937, #111827);
-        }
-        
-        /* Estilos da Galeria de Projetos */
-        .project-gallery .gallery-image {
-            transition: opacity 0.7s ease-in-out;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
 
@@ -163,9 +138,9 @@
                         <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
                             <!-- Image Gallery -->
                             <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
-                                <img src="" alt="Imagem 1 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover">
-                                <img src="" alt="Imagem 2 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover opacity-0">
-                                <img src="" alt="Imagem 3 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/astrorollThumb.png" alt="Imagem 1 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="galeria/astrorollThumb1.png" alt="Imagem 2 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/astrorollThumb2.png" alt="Imagem 3 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover opacity-0">
                             </div>
                             <!-- Project Info -->
                             <h3 class="text-lg font-semibold text-white mb-2">AstroRoll (Unity VR)</h3>
@@ -183,9 +158,9 @@
                         <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
                             <!-- Image Gallery -->
                             <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
-                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=Guardar+Mar" alt="Imagem 1 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/374151/d1d5db?text=AquaRio+VR" alt="Imagem 2 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover opacity-0">
-                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=Exposição" alt="Imagem 3 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/GuardaMar0.png" alt="Imagem 1 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="galeria/GuardaMar1.png" alt="Imagem 2 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/GuardaMar2.png" alt="Imagem 3 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover opacity-0">
                             </div>
                             <!-- Project Info -->
                             <h3 class="text-lg font-semibold text-white mb-2">Guardar Mar (Unity VR)</h3>
@@ -203,9 +178,9 @@
                         <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
                             <!-- Image Gallery -->
                             <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
-                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=WatchParty+1" alt="Imagem 1 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/374151/d1d5db?text=Sincronia+de+Vídeo" alt="Imagem 2 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover opacity-0">
-                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=Sala+de+Vídeo" alt="Imagem 3 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/watch-party0.png" alt="Imagem 1 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="galeria/watch-party1.png" alt="Imagem 2 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/watch-party2.png" alt="Imagem 3 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover opacity-0">
                             </div>
                             <!-- Project Info -->
                             <h3 class="text-lg font-semibold text-white mb-2">WatchParty</h3>
@@ -223,9 +198,8 @@
                         <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
                             <!-- Image Gallery -->
                             <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
-                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=Fractais+1" alt="Imagem 1 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/374151/d1d5db?text=Visão+Computacional" alt="Imagem 2 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover opacity-0">
-                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=UFF" alt="Imagem 3 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/fractais-c.png" alt="Imagem 1 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="galeria/fractais-e.png" alt="Imagem 2 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover opacity-0">
                             </div>
                             <!-- Project Info -->
                             <h3 class="text-lg font-semibold text-white mb-2">Fractais (Visão Computacional)</h3>
@@ -243,9 +217,9 @@
                         <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
                             <!-- Image Gallery -->
                             <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
-                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=EasyCells+1" alt="Imagem 1 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/374151/d1d5db?text=Game+Framework" alt="Imagem 2 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover opacity-0">
-                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=Python+GameDev" alt="Imagem 3 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/SpaceShip0.png" alt="Imagem 1 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="galeria/SpaceShip1.png" alt="Imagem 2 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="galeria/SpaceShip2.png" alt="Imagem 3 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover opacity-0">
                             </div>
                             <!-- Project Info -->
                             <h3 class="text-lg font-semibold text-white mb-2">EasyCells</h3>
@@ -266,41 +240,7 @@
         </main>
     </div>
 
-    <!-- Script para a Galeria de Imagens -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const galleries = document.querySelectorAll('.project-gallery');
-
-            galleries.forEach(gallery => {
-                const images = gallery.querySelectorAll('.gallery-image');
-                if (images.length === 0) return; // Pula se não houver imagens
-                
-                let currentImageIndex = 0;
-
-                // Garante que apenas a primeira imagem esteja visível no início
-                images.forEach((img, index) => {
-                    if (index === 0) {
-                        img.classList.remove('opacity-0');
-                    } else {
-                        img.classList.add('opacity-0');
-                    }
-                });
-
-                setInterval(() => {
-                    if (images.length === 0) return;
-                    
-                    // Esconde a imagem atual
-                    images[currentImageIndex].classList.add('opacity-0');
-
-                    // Calcula o próximo índice
-                    currentImageIndex = (currentImageIndex + 1) % images.length;
-
-                    // Mostra a próxima imagem
-                    images[currentImageIndex].classList.remove('opacity-0');
-                }, 3500); // Muda a imagem a cada 3.5 segundos
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
