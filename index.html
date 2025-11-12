@@ -28,6 +28,11 @@
         .card-gradient {
             background: linear-gradient(145deg, #1f2937, #111827);
         }
+        
+        /* Estilos da Galeria de Projetos */
+        .project-gallery .gallery-image {
+            transition: opacity 0.7s ease-in-out;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -145,10 +150,157 @@
                     </div>
                 </section>
             </div>
+
+            <!-- Projects Section -->
+            <div class="md:col-span-3 mt-12">
+                <section>
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b-2 border-indigo-600 pb-2">Projetos</h2>
+                    
+                    <!-- Projects Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                        <!-- Project 1: AstroRoll -->
+                        <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
+                            <!-- Image Gallery -->
+                            <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
+                                <img src="" alt="Imagem 1 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="" alt="Imagem 2 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="" alt="Imagem 3 do Projeto AstroRoll" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                            </div>
+                            <!-- Project Info -->
+                            <h3 class="text-lg font-semibold text-white mb-2">AstroRoll (Unity VR)</h3>
+                            <p class="text-gray-300 mb-4 flex-grow">
+                                Jogo de Realidade Virtual desenvolvido em Unity para o Meta Quest 2, focado em interação e imersão. Este projeto foi publicado na ACM Digital Library.
+                            </p>
+                            <!-- GitHub Link -->
+                            <a href="https://github.com/poweron0102/AstroRoll" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                Ver no GitHub
+                            </a>
+                        </div>
+                        
+                        <!-- Project 2: Guardar Mar -->
+                        <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
+                            <!-- Image Gallery -->
+                            <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
+                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=Guardar+Mar" alt="Imagem 1 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/374151/d1d5db?text=AquaRio+VR" alt="Imagem 2 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=Exposição" alt="Imagem 3 do Projeto Guardar Mar" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                            </div>
+                            <!-- Project Info -->
+                            <h3 class="text-lg font-semibold text-white mb-2">Guardar Mar (Unity VR)</h3>
+                            <p class="text-gray-300 mb-4 flex-grow">
+                                Experiência interativa em Realidade Virtual sobre a vida marinha, desenvolvida para uma exposição no AquaRio, utilizando Unity.
+                            </p>
+                            <!-- GitHub Link -->
+                            <a href="https://github.com/poweron0102" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                Ver no GitHub
+                            </a>
+                        </div>
+
+                        <!-- Project 3: WatchParty -->
+                        <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
+                            <!-- Image Gallery -->
+                            <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
+                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=WatchParty+1" alt="Imagem 1 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/374151/d1d5db?text=Sincronia+de+Vídeo" alt="Imagem 2 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=Sala+de+Vídeo" alt="Imagem 3 do Projeto WatchParty" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                            </div>
+                            <!-- Project Info -->
+                            <h3 class="text-lg font-semibold text-white mb-2">WatchParty</h3>
+                            <p class="text-gray-300 mb-4 flex-grow">
+                                Aplicação em Python para assistir vídeos localmente com amigos, sincronizando os controles de play, pause e seek entre todos os participantes.
+                            </p>
+                            <!-- GitHub Link -->
+                            <a href="https://github.com/poweron0102/WatchParty" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                Ver no GitHub
+                            </a>
+                        </div>
+                        
+                        <!-- Project 4: Fractais -->
+                        <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
+                            <!-- Image Gallery -->
+                            <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
+                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=Fractais+1" alt="Imagem 1 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/374151/d1d5db?text=Visão+Computacional" alt="Imagem 2 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=UFF" alt="Imagem 3 do Projeto Fractais" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                            </div>
+                            <!-- Project Info -->
+                            <h3 class="text-lg font-semibold text-white mb-2">Fractais (Visão Computacional)</h3>
+                            <p class="text-gray-300 mb-4 flex-grow">
+                                Trabalho realizado para a disciplina de Visão Computacional da UFF, focado na geração e exploração de fractais.
+                            </p>
+                            <!-- GitHub Link -->
+                            <a href="https://github.com/poweron0102/Fractais" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                Ver no GitHub
+                            </a>
+                        </div>
+
+                        <!-- Project 5: EasyCells -->
+                        <div class="card-gradient p-6 rounded-lg shadow-lg flex flex-col">
+                            <!-- Image Gallery -->
+                            <div class="project-gallery relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-800">
+                                <img src="https://placehold.co/600x400/1f2937/d1d5db?text=EasyCells+1" alt="Imagem 1 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/374151/d1d5db?text=Game+Framework" alt="Imagem 2 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                                <img src="https://placehold.co/600x400/4f46e5/d1d5db?text=Python+GameDev" alt="Imagem 3 do Projeto EasyCells" class="gallery-image absolute w-full h-full object-cover opacity-0">
+                            </div>
+                            <!-- Project Info -->
+                            <h3 class="text-lg font-semibold text-white mb-2">EasyCells</h3>
+                            <p class="text-gray-300 mb-4 flex-grow">
+                                Um framework de desenvolvimento de jogos em Python inspirado na Unity, permitindo a criação de Items, Levels e Componentes para RPC e lógica de jogo.
+                            </p>
+                            <!-- GitHub Link -->
+                            <a href="https://github.com/poweron0102/EasyCells" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                Ver no GitHub
+                            </a>
+                        </div>
+                        
+                    </div>
+                </section>
+            </div>
+
         </main>
     </div>
 
+    <!-- Script para a Galeria de Imagens -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleries = document.querySelectorAll('.project-gallery');
+
+            galleries.forEach(gallery => {
+                const images = gallery.querySelectorAll('.gallery-image');
+                if (images.length === 0) return; // Pula se não houver imagens
+                
+                let currentImageIndex = 0;
+
+                // Garante que apenas a primeira imagem esteja visível no início
+                images.forEach((img, index) => {
+                    if (index === 0) {
+                        img.classList.remove('opacity-0');
+                    } else {
+                        img.classList.add('opacity-0');
+                    }
+                });
+
+                setInterval(() => {
+                    if (images.length === 0) return;
+                    
+                    // Esconde a imagem atual
+                    images[currentImageIndex].classList.add('opacity-0');
+
+                    // Calcula o próximo índice
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+
+                    // Mostra a próxima imagem
+                    images[currentImageIndex].classList.remove('opacity-0');
+                }, 3500); // Muda a imagem a cada 3.5 segundos
+            });
+        });
+    </script>
+
 </body>
 </html>
-
-
