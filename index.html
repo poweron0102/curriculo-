@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <div>
-                        <a href="https://github.com/poweron0102/curriculo-/blob/main/Nathan%20Pinheiro%20Baptista.pdf?raw=true" download="Curriculo_Nathan_Baptista.pdf" class="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900">
+                        <a href="https://github.com/poweron0102/curriculo-/blob/main/Nathan%20Pinheiro%20Baptista.pdf?raw=true" download="Curriculo_Nathan_Baptista.pdf" class="print:hidden inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             Baixar PDF
                         </a>
@@ -120,7 +120,7 @@
                 </section>
             </div>
 
-            <div class="md:col-span-3 mt-12">
+            <div class="md:col-span-3 mt-12 print:hidden">
                 <section>
                     <h2 class="text-2xl font-bold text-white mb-6 border-b-2 border-indigo-600 pb-2">Projetos</h2>
                     
@@ -317,7 +317,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="https://github.com/poweron0102/EasyCells" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
+                            <a href="https://github.com/poweron0102/EasyCells3D" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-400 font-medium hover:text-indigo-300 transition-colors duration-300 mt-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                                 Ver no GitHub
                             </a>
@@ -327,10 +327,21 @@
                 </section>
             </div>
 
+            <!-- Mensagem para versão impressa -->
+            <div class="hidden print:block md:col-span-3 mt-8 text-center border-t border-gray-300 pt-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Projetos</h2>
+                <p class="text-gray-700 mb-2">
+                    Os detalhes dos projetos estão disponíveis na versão online:
+                </p>
+                <a href="https://curriculo.nathanpinheiro.com.br/" class="text-indigo-700 font-bold text-lg underline">
+                    https://curriculo.nathanpinheiro.com.br/
+                </a>
+            </div>
+
         </main>
     </div>
 
-    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden">
+    <div id="lightbox" class="print:hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden">
         <button id="close-lightbox" class="absolute top-4 right-4 text-white text-4xl font-bold z-20">&times;</button>
         <div class="relative w-full h-full flex items-center justify-center">
             <button id="prev-lightbox" class="absolute left-4 sm:left-8 text-white p-2 bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition z-10">

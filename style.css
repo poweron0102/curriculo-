@@ -22,3 +22,43 @@ body {
         .project-gallery .gallery-image {
             transition: opacity 0.7s ease-in-out;
         }
+
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    /* Remove o fundo escuro e gradientes dos cards */
+    .card-gradient {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb; /* borda cinza suave */
+        box-shadow: none !important;
+        color: #000000 !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Força a cor do texto para preto/cinza escuro, ignorando as classes do Tailwind */
+    h1, h2, h3, h4, 
+    .text-white, 
+    .text-gray-300, 
+    .text-gray-400, 
+    .text-indigo-400 {
+        color: #1f2937 !important; /* cinza escuro para leitura */
+    }
+
+    /* Ajusta a linha do tempo para impressão */
+    .timeline-item::before {
+        background-color: #374151 !important;
+        border-color: #9ca3af !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Garante que links sejam legíveis */
+    a {
+        text-decoration: underline;
+        color: #2563eb !important; /* azul mais escuro */
+    }
+}
