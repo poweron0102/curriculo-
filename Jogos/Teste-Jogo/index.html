@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Antes do Amanhecer</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="game">
+      <header class="hud">
+        <div>
+          <p class="kicker" id="phaseLabel">Noite profunda</p>
+          <h1 id="placeName">Acampamento</h1>
+        </div>
+
+        <div class="meters" aria-label="Estado da noite">
+          <div class="meter">
+            <span>Tempo</span>
+            <div class="bar"><i id="timeBar"></i></div>
+          </div>
+          <div class="meter">
+            <span>Confiança</span>
+            <div class="bar trust"><i id="trustBar"></i></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="viewport" id="viewport" aria-label="Cena point and click">
+        <div class="sky-layer">
+          <span class="moon"></span>
+          <span class="stars"></span>
+        </div>
+        <div class="scene-art" id="sceneArt"></div>
+        <div class="hotspots" id="hotspots"></div>
+      </section>
+
+      <footer class="inventory-tray">
+        <div class="caption" id="caption" aria-live="polite"></div>
+        <div class="selected-line" id="selectedLine">Clique em objetos na cena.</div>
+        <div class="inventory" id="inventory" aria-label="Inventário"></div>
+      </footer>
+    </main>
+
+    <div class="ending hidden" id="ending" role="dialog" aria-modal="true" aria-labelledby="endingTitle">
+      <div class="ending-card">
+        <p class="kicker" id="endingKicker">Final</p>
+        <h2 id="endingTitle"></h2>
+        <p id="endingText"></p>
+        <button type="button" id="restartButton">Recomeçar</button>
+      </div>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
