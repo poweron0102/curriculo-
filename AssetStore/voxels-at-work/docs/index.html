@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Voxels At Work documentation for importing, editing, saving, and synchronizing Litematic voxel worlds in Unity.">
+  <title>Voxels At Work Documentation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to documentation</a>
+
+  <header class="topbar">
+    <button class="icon-button menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="#overview" aria-label="Voxels At Work documentation home">
+      <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path class="cube-top" d="M24 3 43 13 24 23 5 13Z"/>
+        <path class="cube-left" d="M5 13 24 23v22L5 35Z"/>
+        <path class="cube-right" d="M43 13 24 23v22l19-10Z"/>
+        <path class="brace" d="M38 26c-3 0-4 2-4 5v2c0 2-1 3-3 3 2 0 3 1 3 3v2c0 3 1 5 4 5M42 26c3 0 4 2 4 5v2c0 2 1 3 3 3-2 0-3 1-3 3v2c0 3-1 5-4 5"/>
+      </svg>
+      <span><strong>Voxels At Work</strong><small>Documentation</small></span>
+    </a>
+    <label class="search" for="search-input">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      <input id="search-input" type="search" placeholder="Search documentation" autocomplete="off">
+      <kbd>Ctrl K</kbd>
+    </label>
+    <a class="version" href="../" title="Back to the Voxels At Work product page">Product page · v1.0.0</a>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="Documentation navigation">
+        <p class="nav-label">Start here</p>
+        <a href="#overview">Overview</a>
+        <a href="#requirements">Requirements</a>
+        <a href="#quick-start">Quick start</a>
+        <a href="#resource-packs">Resource pack stacks</a>
+        <a href="#world-config">World configuration</a>
+        <a href="#project-settings">Project settings</a>
+        <a href="#litematic-assets">Litematic Assets</a>
+        <a href="#scene-drop">Drag into the Scene</a>
+        <a href="#demo-scene">Demo scene</a>
+
+        <p class="nav-label">Editor workflows</p>
+        <a href="#world-builder">World Builder</a>
+        <a href="#editor-preview">Preview behavior</a>
+        <a href="#authoring">Edit a schematic</a>
+        <a href="#history">Authoring history</a>
+        <a href="#baking">Bake static content</a>
+
+        <p class="nav-label">Runtime</p>
+        <a href="#loader">LoadVoxelWorld</a>
+        <a href="#api">Core API</a>
+        <a href="#persistence">Save and load</a>
+        <a href="#netcode">Multiplayer and NGO</a>
+
+        <p class="nav-label">Help</p>
+        <a href="#known-issues">Known issues</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#api-reference">API at a glance</a>
+      </nav>
+    </aside>
+
+    <div class="sidebar-scrim" id="sidebar-scrim"></div>
+
+    <main id="content">
+      <div class="search-status" id="search-status" role="status" aria-live="polite"></div>
+
+      <section class="hero doc-section" id="overview" data-title="Overview">
+        <div class="hero-copy">
+          <span class="eyebrow">Unity voxel workflow</span>
+          <h1>Turn Litematic schematics into live Unity worlds.</h1>
+          <p class="hero-lead">Import Minecraft resource packs, preview <code>.litematic</code> files in the Editor, edit blocks visually, persist changes, and synchronize compact command deltas with Netcode for GameObjects.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#quick-start">Start the quick guide</a>
+            <a class="button secondary" href="#api">Explore the API</a>
+          </div>
+          <ul class="feature-pills" aria-label="Key features">
+            <li>Editor and runtime</li>
+            <li>Resource pack stacks</li>
+            <li>Chunked meshing</li>
+            <li>Undo and redo</li>
+            <li>Optional NGO sync</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="doc-section" id="requirements" data-title="Requirements">
+        <div class="section-heading"><span>Before you begin</span><h2>Requirements</h2></div>
+        <div class="card-grid three">
+          <article class="info-card"><strong>Unity</strong><span>Unity 6000.3 or newer</span></article>
+          <article class="info-card"><strong>Rendering</strong><span>Universal Render Pipeline 17.3</span></article>
+        <article class="info-card"><strong>Packages</strong><span>Burst 1.8.29, Collections 2.6.7, Mathematics 1.3.3, Newtonsoft Json 3.2.1, Test Framework 1.6.0</span></article>
+        </div>
+        <div class="callout note">
+          <strong>Netcode is optional.</strong>
+          <p>Install Netcode for GameObjects only when using the <code>VoxelsAtWork.Netcode</code> components. The core runtime does not depend on NGO.</p>
+        </div>
+      </section>
+
+      <section class="doc-section" id="quick-start" data-title="Quick start">
+        <div class="section-heading"><span>Recommended workflow</span><h2>Quick start</h2><p>This path uses project defaults and drag-and-drop. It is the fastest way to get a Play Mode-ready world into a scene.</p></div>
+        <ol class="step-list overview-steps">
+          <li><a href="#resource-packs"><b>Import a resource pack stack</b><span>Compile Minecraft blockstates, models, and textures into Unity assets.</span></a></li>
+          <li><a href="#world-config"><b>Create a VoxelWorldConfig</b><span>Assign the compiled resource pack and choose chunk, import, and meshing settings.</span></a></li>
+          <li><a href="#project-settings"><b>Set project defaults</b><span>Make new loaders and Scene drops inherit the configuration.</span></a></li>
+          <li><a href="#litematic-assets"><b>Enable thumbnails and import a .litematic</b><span>Generate visual previews in the Project window.</span></a></li>
+          <li><a href="#scene-drop"><b>Drag the Litematic Asset into the Scene</b><span>Create a configured loader and build its preview immediately.</span></a></li>
+        </ol>
+      </section>
+
+      <section class="doc-section" id="resource-packs" data-title="Resource pack stacks">
+        <div class="section-heading"><span>Step 1</span><h2>Import a resource pack stack</h2></div>
+        <p>Open <span class="menu-path">Window › Voxels At Work › Import Resource Pack Stack</span>. A stack may combine a complete base pack with one or more override packs.</p>
+        <figure class="media-frame">
+          <img src="media/images/01-resource-pack-import-window.png" alt="Empty Import Resource Pack Stack window" data-lightbox>
+          <figcaption>The resource pack stack importer before folders are added.</figcaption>
+        </figure>
+        <div class="callout important"><strong>Stack order matters.</strong><p>The top entry has the highest priority. The bottom entry must be the explicit base pack. Resolution happens independently for blockstates, models, and textures.</p></div>
+        <ol class="step-list">
+          <li><div><b>Add pack root folders</b><p>Use folders that contain an <code>assets/</code> directory. They may live outside the Unity project.</p></div></li>
+          <li><div><b>Order overrides above the base</b><p>A partial texture pack belongs above a complete vanilla-format base pack.</p></div></li>
+          <li><div><b>Choose an output folder under Assets</b><p>The source folders are needed only when importing or reimporting.</p></div></li>
+          <li><div><b>Name and import the stack</b><p>Use <strong>Lenient</strong> while iterating; use <strong>Strict</strong> when missing or invalid resources should fail the import.</p></div></li>
+        </ol>
+        <p>The importer creates three persistent assets:</p>
+        <div class="code-card plain"><pre><code>MyStack_ResourcePack.asset
+MyStack_BlockMetadata.asset
+MyStack_TextureArray.asset</code></pre></div>
+        <figure class="media-frame">
+          <img src="media/images/02-resource-pack-generated-assets.png" alt="Generated resource pack, block metadata, and texture array assets in the Unity Project window" data-lightbox>
+          <figcaption>Generated resource pack assets are self-contained for Play Mode and builds.</figcaption>
+        </figure>
+        <div class="callout warning"><strong>Do not redistribute Minecraft assets without permission.</strong><p>Voxels At Work compiles assets supplied by the user. Confirm the license and redistribution rights for every resource pack you ship.</p></div>
+      </section>
+
+      <section class="doc-section" id="world-config" data-title="World configuration">
+        <div class="section-heading"><span>Step 2</span><h2>Create and configure a VoxelWorldConfig</h2></div>
+        <p>Create the asset from <span class="menu-path">Assets › Create › Voxels At Work › World Config</span>, then assign the compiled <code>ResourcePackAsset</code>.</p>
+        <figure class="media-frame">
+          <img src="media/images/03-voxel-world-config.png" alt="VoxelWorldConfig Inspector with a compiled resource pack assigned" data-lightbox>
+          <figcaption>A world configuration using a compiled Faithful resource pack.</figcaption>
+        </figure>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Setting</th><th>Purpose</th><th>Recommended start</th></tr></thead>
+          <tbody>
+            <tr><td>Resource Pack</td><td>Compiled blockstates, models, textures, and metadata.</td><td>Assign the imported stack.</td></tr>
+            <tr><td>Use Convention Fallback</td><td>Tries name-based block resolution when the resource pack cannot resolve a block.</td><td>Off; enable for prototyping only.</td></tr>
+            <tr><td>Chunk Size</td><td>Voxel dimensions of each generated chunk.</td><td>16</td></tr>
+            <tr><td>Unknown Block Policy</td><td>Skips, replaces, or reports unresolved block states.</td><td>Placeholder</td></tr>
+            <tr><td>Region Conflict Policy</td><td>Chooses which region wins when regions overlap.</td><td>Last Wins</td></tr>
+            <tr><td>Activation Policy</td><td>Builds every chunk or activates chunks around an anchor.</td><td>Build All for authoring.</td></tr>
+            <tr><td>Mesh Budget Ms Per Frame</td><td>Limits incremental runtime mesh work each frame.</td><td>4 ms</td></tr>
+            <tr><td>Global Tints</td><td>Grass, foliage, and water colors without biome data.</td><td>Adjust to the project art direction.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="doc-section" id="project-settings" data-title="Project settings">
+        <div class="section-heading"><span>Step 3</span><h2>Set project defaults</h2></div>
+        <p>Open <span class="menu-path">Edit › Project Settings › Voxels At Work</span>. Assign the <strong>Default Config</strong> so new loaders and Scene drops inherit it.</p>
+        <figure class="media-frame">
+          <img src="media/images/04-project-settings.png" alt="Voxels At Work panel in Unity Project Settings" data-lightbox>
+          <figcaption>Project defaults, editor load mode, selection controls, and Litematic thumbnail settings.</figcaption>
+        </figure>
+        <div class="callout note"><strong>Defaults are references, not copies.</strong><p>Changing a project default affects newly created loaders. Existing loaders keep their assigned references.</p></div>
+        <h3>Editor Load Mode</h3>
+        <div class="card-grid three">
+          <article class="info-card"><strong>Manual</strong><span>Build only from the loader Inspector or when Play Mode loads the world.</span></article>
+          <article class="info-card"><strong>When Selected</strong><span>Build the editor preview when the loader object is selected.</span></article>
+          <article class="info-card"><strong>On Scene Open</strong><span>Build every loader when the scene opens. This is the heaviest option.</span></article>
+        </div>
+      </section>
+
+      <section class="doc-section" id="litematic-assets" data-title="Litematic Assets">
+        <div class="section-heading"><span>Step 4</span><h2>Enable previews and import a Litematic</h2></div>
+        <p>Enable <strong>Generate Import Previews</strong> in Project Settings, then click <strong>Reimport All .litematic Assets</strong>. The toggle controls 128×128 Project-window thumbnails; it does not control the Scene preview.</p>
+        <figure class="media-frame">
+          <img src="media/images/05-litematic-import-previews.png" alt="Litematic thumbnails displayed in the Unity Project window" data-lightbox>
+          <figcaption>Imported Litematic Assets with generated thumbnails.</figcaption>
+        </figure>
+        <ol class="step-list">
+          <li><div><b>Place a .litematic file under Assets</b><p>Unity imports it as a <code>LitematicAsset</code>.</p></div></li>
+          <li><div><b>Inspect its metadata</b><p>The asset stores raw bytes plus name, author, description, size, region count, block count, and Minecraft data version.</p></div></li>
+          <li><div><b>Use the asset as the source of truth</b><p>The mesh is derived output. The <code>LitematicAsset</code>, configuration, and optional history are the reproducible source.</p></div></li>
+        </ol>
+      </section>
+
+      <section class="doc-section" id="scene-drop" data-title="Drag into the Scene">
+        <div class="section-heading"><span>Step 5</span><h2>Drag the Litematic Asset into the Scene</h2></div>
+        <p>Drag a <code>LitematicAsset</code> from the Project window into the Scene view. Voxels At Work creates a <code>LoadVoxelWorld</code>, assigns project defaults, positions it at the drop point, and builds the editor preview.</p>
+        <figure class="media-frame video-frame">
+          <img src="media/videos/drag-litematic-into-scene.gif" alt="Dragging Litematic Assets into the Unity Scene">
+          <figcaption>Drag-and-drop creates configured, Play Mode-ready scene objects.</figcaption>
+        </figure>
+        <figure class="media-frame">
+          <img src="media/images/06-litematic-scene-preview.png" alt="A rendered Litematic schematic in the Unity Scene view" data-lightbox>
+          <figcaption>The generated editor preview uses the same import and meshing pipeline as runtime.</figcaption>
+        </figure>
+        <div class="callout success"><strong>Play Mode-ready by default.</strong><p>The loader rebuilds its runtime world in <code>Awake()</code>. <strong>Build Immediately (runtime)</strong> controls whether meshes are completed immediately after load; it does not disable base import or history replay.</p></div>
+      </section>
+
+      <section class="doc-section" id="demo-scene" data-title="Demo scene">
+        <div class="section-heading"><span>See it working</span><h2>Demo scene</h2></div>
+        <p><code>Demo/Scene/DemoScene.unity</code> is a minimal scene with a <code>LoadVoxelWorld</code> already configured against one of the sample <code>.litematic</code> files under <code>Demo/litematics/</code> and the <code>Basic</code> resource pack under <code>Demo/Textures/</code>. Open the scene and enter Play Mode to see the schematic import and build into a live voxel world with no additional setup.</p>
+        <div class="callout note"><strong>Reference, not a showcase.</strong><p>The bundled <code>Basic</code> pack is a flat-color placeholder, not a visual demonstration. Use the demo scene to see a working <code>LitematicAsset</code> / <code>VoxelWorldConfig</code> / resource pack setup, then swap in your own resource pack stack for real block visuals.</p></div>
+      </section>
+
+      <section class="doc-section" id="world-builder" data-title="World Builder">
+        <div class="section-heading"><span>Alternative workflow</span><h2>Use World Builder for manual imports</h2></div>
+        <p>Open <span class="menu-path">Window › Voxels At Work › World Builder</span> when you want to choose every input explicitly instead of using project defaults.</p>
+        <div class="card-grid two">
+          <article class="info-card"><strong>Create Play Mode-ready object</strong><span>Adds and configures a <code>LoadVoxelWorld</code> after building the preview.</span></article>
+          <article class="info-card"><strong>Preview only</strong><span>Creates a temporary <code>VoxelWorld</code> without a runtime loader. Bake it when static content is required.</span></article>
+        </div>
+        <ol class="step-list">
+          <li><div><b>Assign the schematic</b><p>Choose the imported <code>LitematicAsset</code>.</p></div></li>
+          <li><div><b>Assign a World Config</b><p>Choose the resource pack, chunks, and import behavior.</p></div></li>
+          <li><div><b>Optionally assign a Block Registry</b><p>Manual overrides are applied before resource pack resolution.</p></div></li>
+          <li><div><b>Build the scene preview</b><p>The window displays the latest <code>ImportReport</code>.</p></div></li>
+        </ol>
+        <figure class="media-frame">
+          <img src="media/images/07-multiple-litematics-in-scene.png" alt="Multiple imported Litematic schematics in the Unity Scene" data-lightbox>
+          <figcaption>Multiple loaders may coexist in the same scene.</figcaption>
+        </figure>
+      </section>
+
+      <section class="doc-section" id="editor-preview" data-title="Preview behavior">
+        <div class="section-heading"><span>Editor workflow</span><h2>Understand preview behavior</h2></div>
+        <p>The editor preview is transient. It is safe to clear and rebuild because it is derived from the <code>.litematic</code>, its configuration, materialized scene entities, and optional authoring history.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Control</th><th>What it changes</th></tr></thead>
+          <tbody>
+            <tr><td>Editor Load Mode</td><td>When the editor preview builds automatically.</td></tr>
+            <tr><td>Build in editor / Rebuild in editor</td><td>Imports the base, replays history, and builds every preview mesh now.</td></tr>
+            <tr><td>Clear preview</td><td>Removes generated chunk children and the transient <code>VoxelWorld</code>.</td></tr>
+            <tr><td>Build Immediately (runtime)</td><td>Calls <code>BuildAllNow()</code> after runtime load. When disabled, normal frame-budgeted meshing can continue through <code>Update()</code>.</td></tr>
+            <tr><td>Generate Import Previews</td><td>Generates Project-window thumbnails during asset import. Reimport is required.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="doc-section" id="authoring" data-title="Edit a schematic">
+        <div class="section-heading"><span>Visual authoring</span><h2>Edit a schematic in the Scene view</h2></div>
+        <p>Open <span class="menu-path">Window › Voxels At Work › Block Selection</span>, then select a <code>VoxelWorld</code> or one of its chunk objects.</p>
+        <figure class="media-frame">
+          <img src="media/images/08-voxel-blocks-window.png" alt="Voxels At Work Block Selection window" data-lightbox>
+          <figcaption>The dockable selection window supports chunk and block workflows.</figcaption>
+        </figure>
+        <h3>Chunk Selection</h3>
+        <p>Select a generated chunk object to inspect or reposition a larger section. The selected chunk is outlined in the Scene view.</p>
+        <figure class="media-frame">
+          <img src="media/images/09-chunk-selection.png" alt="A selected voxel chunk outlined in the Unity Scene view" data-lightbox>
+          <figcaption>Chunk selection is useful for inspecting world partitioning.</figcaption>
+        </figure>
+        <h3>Block Selection</h3>
+        <ul class="check-list">
+          <li>Click a block in the Scene view to select it.</li>
+          <li>Ctrl-click on Windows or Cmd-click on macOS to toggle blocks.</li>
+          <li>Use the configured arrow and bracket keys to move the active highlight.</li>
+          <li>Hold the configured Move All Modifier while navigating to move every selected highlight.</li>
+          <li>Drag the transform handle and confirm the move, or press Delete to remove selected blocks.</li>
+          <li>Use Promote to turn selected grid blocks into a movable GameObject.</li>
+        </ul>
+        <figure class="media-frame">
+          <img src="media/images/10-block-selection.png" alt="A selected voxel block and its state information" data-lightbox>
+          <figcaption>A selected block shows state, palette, coordinates, chunk, block entity, and geometry information.</figcaption>
+        </figure>
+        <figure class="media-frame video-frame compact">
+          <img src="media/videos/move-selected-block.gif" alt="Moving a selected voxel block in the Unity Scene view">
+          <figcaption>Moving a selected block commits an editable command.</figcaption>
+        </figure>
+        <h3>Promoted entities</h3>
+        <p>Promotion removes the selected cells from the grid and creates a <code>PromotedEntity</code> GameObject with persistent source-cell information. Add components such as a Rigidbody, move it freely, and bake it back into the grid later.</p>
+        <div class="media-pair">
+          <figure class="media-frame"><img src="media/images/11-promoted-entity.png" alt="A voxel promoted into a GameObject" data-lightbox><figcaption>A promoted block becomes an independent GameObject.</figcaption></figure>
+          <figure class="media-frame"><img src="media/images/12-promoted-entity-rigidbody.png" alt="A promoted voxel entity with a Rigidbody component" data-lightbox><figcaption>Standard Unity components can be added to the promoted entity.</figcaption></figure>
+        </div>
+        <figure class="media-frame video-frame">
+          <img src="media/videos/promoted-entity-physics.gif" alt="A promoted voxel entity using Unity physics">
+          <figcaption>Promoted entities can participate in normal Unity physics.</figcaption>
+        </figure>
+      </section>
+
+      <section class="doc-section" id="history" data-title="Authoring history">
+        <div class="section-heading"><span>Reproducible edits</span><h2>Save edits to an authoring history</h2></div>
+        <p>Scene previews are generated data. Save visual edits to a <code>VoxelEditHistory</code> so they can be replayed after a preview rebuild and when the runtime world loads.</p>
+        <ol class="step-list">
+          <li><div><b>Build the editor preview</b><p>The loader needs a live world before it can record edits.</p></div></li>
+          <li><div><b>Edit blocks or promoted entities</b><p>Every committed operation is added to the world's command log.</p></div></li>
+          <li><div><b>Select the LoadVoxelWorld object</b><p>The Inspector reports saved and unsaved edit counts.</p></div></li>
+          <li><div><b>Click Save edits to history</b><p>On the first save, an asset named <code>&lt;LitematicName&gt;_EditHistory.asset</code> is created beside the schematic.</p></div></li>
+        </ol>
+        <div class="callout warning"><strong>Base version mismatch</strong><p>If the source <code>.litematic</code> changes, the history is still replayed, but edits may target shifted cells. Review the result and save the history again only after confirming it.</p></div>
+      </section>
+
+      <section class="doc-section" id="baking" data-title="Bake static content">
+        <div class="section-heading"><span>Static output</span><h2>Bake a world to a prefab</h2></div>
+        <p>For non-editable environment art, select a generated <code>VoxelWorld</code> and use <strong>Bake to prefab (selected world)</strong> in World Builder. The bake persists meshes, colliders, materials, and the texture array beside the prefab.</p>
+        <div class="callout note"><strong>Choose one source of truth.</strong><p>Use a baked prefab for static content. Use <code>LoadVoxelWorld</code> when runtime editing, persistence, or multiplayer command sync is required.</p></div>
+      </section>
+
+      <section class="doc-section" id="loader" data-title="LoadVoxelWorld">
+        <div class="section-heading"><span>Runtime bootstrap</span><h2>LoadVoxelWorld component</h2></div>
+        <p><code>LoadVoxelWorld</code> is the recommended scene bootstrap. In <code>Awake()</code>, it initializes a world, restores an existing runtime snapshot when configured, or imports the Litematic base and replays authoring history.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Behavior</th></tr></thead>
+          <tbody>
+            <tr><td>Schematic (.litematic)</td><td>Required base asset.</td></tr>
+            <tr><td>World Config</td><td>Resource pack, import, chunk, activation, and meshing settings.</td></tr>
+            <tr><td>Block Registry</td><td>Optional manual block overrides.</td></tr>
+            <tr><td>Build Immediately (runtime)</td><td>Completes all mesh work during load when enabled.</td></tr>
+            <tr><td>Edit History</td><td>Optional authoring delta log replayed over the base.</td></tr>
+            <tr><td>Save Key</td><td>Enables automatic runtime snapshot restore when non-empty.</td></tr>
+            <tr><td>Editor Load Mode</td><td>Overrides the project-wide preview mode for this loader.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="doc-section" id="api" data-title="Core API">
+        <div class="section-heading"><span>Code workflows</span><h2>Use the core API</h2><p>All public block coordinates use Minecraft orientation: X east, Y up, and Z south. Unity conversion negates Z.</p></div>
+
+        <h3>Create and import a world</h3>
+        <div class="code-card"><pre><code class="language-csharp">using UnityEngine;
+using VoxelsAtWork;
+
+public sealed class RuntimeVoxelBootstrap : MonoBehaviour
+{
+    [SerializeField] LitematicAsset schematic;
+    [SerializeField] VoxelWorldConfig config;
+    [SerializeField] BlockRegistryAsset registryAsset;
+
+    VoxelWorld world;
+
+    void Start()
+    {
+        BlockRegistry registry = registryAsset != null
+            ? registryAsset.ToRegistry()
+            : BlockRegistry.CreateForConfig(config);
+
+        world = VoxelWorld.Create(registry, config, "Runtime Voxel World");
+        ImportReport report = world.ImportLitematic(schematic.Bytes);
+        world.BuildAllNow();
+
+        Debug.Log(report);
+    }
+}</code></pre></div>
+
+        <h3>Remap blocks during import</h3>
+        <div class="code-card"><pre><code class="language-csharp">world.ImportLitematic(schematic.Bytes, state =&gt;
+{
+    if (state.Id == "minecraft:tnt")
+        return BlockState.Air;
+
+    if (state.Id == "minecraft:gold_block")
+        return BlockState.Parse("minecraft:oak_planks");
+
+    return state;
+});</code></pre></div>
+
+        <h3>Read, edit, undo, and redo</h3>
+        <div class="code-card"><pre><code class="language-csharp">var pos = new BlockPos(0, 64, 0);
+
+BlockState before = world.GetBlock(pos);
+world.SetBlock(pos, BlockState.Parse("minecraft:stone"));
+world.MoveBlock(pos, pos.East);
+
+if (world.CanUndo) world.Undo();
+if (world.CanRedo) world.Redo();</code></pre></div>
+
+        <h3>Commit an atomic batch</h3>
+        <div class="code-card"><pre><code class="language-csharp">using (var edit = world.BeginEdit())
+{
+    edit.Fill(
+        new BlockPos(0, 64, 0),
+        new BlockPos(4, 67, 4),
+        BlockState.Parse("minecraft:glass"));
+
+    edit.Set(2, 68, 2, BlockState.Parse("minecraft:lantern"));
+}
+
+world.BuildAllNow();</code></pre></div>
+
+        <h3>Listen for changes</h3>
+        <div class="code-card"><pre><code class="language-csharp">world.OnBlockChanged += (pos, oldState, newState) =&gt;
+    Debug.Log($"{pos}: {oldState} -&gt; {newState}");
+
+world.OnImportReport += report =&gt;
+    Debug.Log(report);
+
+world.OnBufferCommitted += (buffer, origin) =&gt;
+    Debug.Log($"{buffer.Count} commands from {origin}");</code></pre></div>
+
+        <h3>Promote and bake blocks</h3>
+        <div class="code-card"><pre><code class="language-csharp">var entity = world.PromoteToEntity(
+    new BlockPos(10, 64, 10),
+    addRigidbody: true);
+
+if (entity != null)
+{
+    entity.transform.position += Vector3.up * 2f;
+    entity.BakeIntoGrid();
+}</code></pre></div>
+
+        <h3>Convert between voxel and Unity coordinates</h3>
+        <div class="code-card"><pre><code class="language-csharp">Vector3 corner = world.WorldToUnity(new BlockPos(10, 64, 10));
+Vector3 center = world.WorldToUnityCenter(new BlockPos(10, 64, 10));
+BlockPos cell = world.UnityToWorld(transform.position);</code></pre></div>
+      </section>
+
+      <section class="doc-section" id="persistence" data-title="Save and load">
+        <div class="section-heading"><span>Runtime persistence</span><h2>Save and load worlds</h2></div>
+        <h3>Use the loader's persistent save key</h3>
+        <p>Set a non-empty <strong>Save Key</strong> on <code>LoadVoxelWorld</code>. On the next load, a snapshot with that key wins over base import and authoring history because it already contains the complete runtime state.</p>
+        <div class="code-card"><pre><code class="language-csharp">LoadVoxelWorld loader = GetComponent&lt;LoadVoxelWorld&gt;();
+
+loader.SaveKey = "player-world";
+loader.SaveToDisk();
+loader.LoadFromDisk();
+
+bool exists = LoadVoxelWorld.SaveExists("player-world");
+loader.DeleteSave();</code></pre></div>
+        <h3>Write to your own stream</h3>
+        <div class="code-card"><pre><code class="language-csharp">using System.IO;
+
+using (var file = File.Create(path))
+    WorldSave.SaveSnapshot(world, file);
+
+using (var file = File.OpenRead(path))
+    WorldSave.Load(world, file);</code></pre></div>
+        <div class="card-grid two">
+          <article class="info-card"><strong>Snapshot</strong><span>Complete palette, chunks, block entities, promoted entities, transforms, and persistent component payloads.</span></article>
+          <article class="info-card"><strong>Delta log</strong><span>Base reference plus committed command buffers. Import the same base before replaying it.</span></article>
+        </div>
+      </section>
+
+      <section class="doc-section" id="netcode" data-title="Multiplayer and NGO">
+        <div class="section-heading"><span>Optional integration</span><h2>Multiplayer with Netcode for GameObjects</h2><p>Voxels At Work synchronizes commands, not meshes or the complete base schematic.</p></div>
+        <div class="flow-diagram" aria-label="Netcode synchronization flow">
+          <div><b>Every peer</b><span>Load the same base</span></div><i>→</i>
+          <div><b>Local edit</b><span>CommandBuffer</span></div><i>→</i>
+          <div><b>Server</b><span>Validate and broadcast</span></div><i>→</i>
+          <div><b>Peers</b><span>Apply the delta</span></div>
+        </div>
+        <ol class="step-list">
+          <li><div><b>Load identical local inputs</b><p>Every peer must use the same <code>.litematic</code>, configuration, resource pack, registry, and authoring history.</p></div></li>
+          <li><div><b>Add a NetworkObject</b><p>Add <code>VoxelNetSync</code> to synchronize committed commands.</p></div></li>
+          <li><div><b>Add join-in-progress support when needed</b><p><code>VoxelNetJoinInProgress</code> sends a compacted snapshot plus the residual command log to late clients.</p></div></li>
+          <li><div><b>Assign the world</b><p>Set the <code>World</code> property after creating it, or let the components find a <code>VoxelWorld</code> in the scene.</p></div></li>
+        </ol>
+        <div class="code-card"><pre><code class="language-csharp">using UnityEngine;
+using VoxelsAtWork;
+using VoxelsAtWork.Netcode;
+
+public sealed class NetworkVoxelBootstrap : MonoBehaviour
+{
+    [SerializeField] LoadVoxelWorld loader;
+    [SerializeField] VoxelNetSync sync;
+    [SerializeField] VoxelNetJoinInProgress joinInProgress;
+
+    void Start()
+    {
+        VoxelWorld world = loader.LoadNow();
+        sync.World = world;
+
+        if (joinInProgress != null)
+            joinInProgress.World = world;
+    }
+}</code></pre></div>
+        <div class="callout important"><strong>Server authority</strong><p>Assign <code>VoxelNetSync.ServerValidator</code> to reject invalid client commands. A rejected edit receives corrective block states from the server.</p></div>
+      </section>
+
+      <section class="doc-section" id="known-issues" data-title="Known issues">
+        <div class="section-heading"><span>Compatibility</span><h2>Known issues and limitations</h2></div>
+        <ul class="check-list">
+          <li>Verified against Unity <strong>6000.3.12f1</strong>. Other Unity 6000.3.x patch releases are expected to work but have not been tested yet.</li>
+          <li>Rendering has only been tested with the <strong>Universal Render Pipeline (URP) 17.3</strong>. The Built-in Render Pipeline and HDRP have not been tested and are not supported.</li>
+          <li>Only Windows Desktop has been tested so far. Mobile, console, and WebGL targets have not been verified.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="troubleshooting" data-title="Troubleshooting">
+        <div class="section-heading"><span>Real-world checks</span><h2>Troubleshooting</h2></div>
+        <div class="accordion">
+          <details open><summary>My imported world has missing or placeholder blocks.</summary><div><p>Inspect the resource pack import report and the world's <code>ImportReport</code>. A complete base usually needs blockstates, models, and textures under <code>assets/&lt;namespace&gt;/</code>. Keep partial override packs above the complete base. Leave <strong>Unknown Block Policy</strong> on Placeholder while diagnosing.</p></div></details>
+          <details><summary>The Litematic Asset has no thumbnail.</summary><div><p>Enable <strong>Generate Import Previews</strong> under Project Settings › Voxels At Work, assign a usable default configuration and resource pack, then click <strong>Reimport All .litematic Assets</strong>. The toggle affects future imports and reimports only.</p></div></details>
+          <details><summary>The world loads in Play Mode but meshes are not immediately visible.</summary><div><p>Enable <strong>Build Immediately (runtime)</strong> on <code>LoadVoxelWorld</code> when the complete world must be visible during startup. When disabled, the world still imports and replays history; meshing proceeds through the configured per-frame budget.</p></div></details>
+          <details><summary>The editor becomes slow when opening a scene.</summary><div><p>Use <strong>Manual</strong> or <strong>When Selected</strong> as the global Editor Load Mode. <strong>On Scene Open</strong> rebuilds every loader and is intended only for scenes where that cost is acceptable.</p></div></details>
+          <details><summary>Saved authoring edits appear in the wrong cells.</summary><div><p>The history may have been authored against different Litematic bytes. Check the base-version mismatch warning. Rebuild and verify the schematic before saving a new history.</p></div></details>
+          <details><summary>A runtime save ignores changes made to the base schematic.</summary><div><p>When a Save Key points to an existing snapshot, the snapshot wins because it contains the complete world. Clear that runtime save to return to base import plus authoring-history replay.</p></div></details>
+          <details><summary>Clients produce different worlds from the same commands.</summary><div><p>Verify that every peer starts from identical base bytes, resource pack, registry, configuration, history, and command order. Block states are serialized by name, but different resolution inputs can still generate different visuals or collision.</p></div></details>
+          <details><summary>Resource pack changes do not appear at runtime.</summary><div><p>Reimport the stack so its compiled assets and texture array are regenerated. Runtime reads compiled Unity assets; it does not read source JSON or PNG files directly.</p></div></details>
+        </div>
+      </section>
+
+      <section class="doc-section" id="api-reference" data-title="API at a glance">
+        <div class="section-heading"><span>Curated reference</span><h2>API at a glance</h2></div>
+        <div class="reference-grid">
+          <article><h3>LoadVoxelWorld</h3><code>LoadNow()</code><code>SaveToDisk()</code><code>LoadFromDisk()</code><code>DeleteSave()</code><code>ListSaves()</code></article>
+          <article><h3>VoxelWorld</h3><code>Create()</code><code>ImportLitematic()</code><code>BuildAllNow()</code><code>GetBlock()</code><code>SetBlock()</code><code>MoveBlock()</code><code>BeginEdit()</code><code>Undo()</code><code>Redo()</code></article>
+          <article><h3>Entities</h3><code>PromoteToEntity()</code><code>PromoteBlocks()</code><code>Promote&lt;T&gt;()</code><code>BakeEntityIntoGrid()</code><code>GetEntity()</code></article>
+          <article><h3>Persistence</h3><code>WorldSave.SaveSnapshot()</code><code>WorldSave.SaveDeltaLog()</code><code>WorldSave.Load()</code><code>VoxelEditHistory.ReplayInto()</code></article>
+          <article><h3>Coordinates</h3><code>BlockPos</code><code>WorldToUnity()</code><code>WorldToUnityCenter()</code><code>UnityToWorld()</code><code>CoordinateSpace</code></article>
+          <article><h3>Netcode</h3><code>VoxelNetSync.World</code><code>VoxelNetSync.ServerValidator</code><code>VoxelNetJoinInProgress.World</code><code>SnapshotCompactionBytes</code></article>
+        </div>
+      </section>
+
+      <footer>
+        <svg class="footer-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 43 13 24 23 5 13Z"></path><path d="M5 13 24 23v22L5 35ZM43 13 24 23v22l19-10Z"></path></svg>
+        <div><strong>Voxels At Work</strong><span>Documentation for package version 1.0.0.</span></div>
+        <a href="#overview">Back to top ↑</a>
+      </footer>
+    </main>
+  </div>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" aria-label="Close image viewer">×</button>
+    <button class="lightbox-nav previous" type="button" aria-label="Previous image">‹</button>
+    <figure><img src="" alt=""><figcaption></figcaption></figure>
+    <button class="lightbox-nav next" type="button" aria-label="Next image">›</button>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
