@@ -1,0 +1,191 @@
+{
+  "format": "aramara-game-schema",
+  "version": 1,
+  "description": "Catálogo dos recursos de diálogo reconhecidos pelo minigame do arco. Mantido pela equipe de desenvolvimento; não é editável pela interface do editor.",
+  "speakers": [
+    { "id": "indio", "name": "Índio" },
+    { "id": "player", "name": "Jogador" },
+    { "id": "narrator", "name": "Narrador" }
+  ],
+  "items": [
+    { "id": "animal_hide", "name": "Pele de Animal" },
+    { "id": "bird_feather", "name": "Pena de Pássaro" },
+    { "id": "common_branch", "name": "Galho Comum" },
+    { "id": "flint_piece", "name": "Pederneira" },
+    { "id": "new_bow", "name": "Arco Novo" },
+    { "id": "old_bow", "name": "Arco Antigo" },
+    { "id": "plant_fiber", "name": "Fibra Vegetal" },
+    { "id": "sturdy_branch", "name": "Galho Resistente" },
+    { "id": "wild_berries", "name": "Frutas Silvestres" }
+  ],
+  "milestones": [
+    { "id": "fire_lit", "name": "Fogueira acesa" },
+    { "id": "new_bow_crafted", "name": "Arco novo fabricado" },
+    { "id": "old_bow_recovered", "name": "Arco antigo recuperado" }
+  ],
+  "endings": [
+    { "id": "old_bow_low_trust", "name": "Arco antigo com confiança baixa" },
+    { "id": "old_bow_high_trust", "name": "Arco antigo com confiança alta" },
+    { "id": "new_bow", "name": "Arco novo" },
+    { "id": "dawn_timeout", "name": "Amanhecer / tempo esgotado" }
+  ],
+  "trust": {
+    "minimum": 0,
+    "maximum": 10,
+    "highTrustMinimum": 6,
+    "monotonic": true,
+    "sources": [
+      { "when": { "kind": "item_delivered", "itemId": "wild_berries" }, "amount": 1 },
+      { "when": { "kind": "item_delivered", "itemId": "animal_hide" }, "amount": 2 },
+      { "when": { "kind": "item_delivered", "itemId": "bird_feather" }, "amount": 2 },
+      { "when": { "kind": "item_delivered", "itemId": "sturdy_branch" }, "amount": 1 },
+      { "when": { "kind": "item_delivered", "itemId": "plant_fiber" }, "amount": 1 },
+      { "when": { "kind": "item_delivered", "itemId": "common_branch" }, "amount": 1 },
+      { "when": { "kind": "milestone", "milestoneId": "fire_lit" }, "amount": 2 }
+    ]
+  },
+  "triggers": [
+    {
+      "id": "minigame_start",
+      "name": "Início do minigame",
+      "repeatable": false,
+      "parameter": null,
+      "effects": []
+    },
+    {
+      "id": "manual_conversation",
+      "name": "Conversa manual",
+      "repeatable": true,
+      "parameter": null,
+      "effects": []
+    },
+    {
+      "id": "first_item_collected",
+      "name": "Primeira coleta de item",
+      "repeatable": false,
+      "parameter": { "kind": "item" },
+      "effects": [{ "kind": "item_collected", "itemId": "$parameter", "value": true }]
+    },
+    {
+      "id": "first_item_delivered",
+      "name": "Primeira entrega de item",
+      "repeatable": false,
+      "parameter": { "kind": "item" },
+      "effects": [{ "kind": "item_delivered", "itemId": "$parameter", "value": true }]
+    },
+    {
+      "id": "fire_lit",
+      "name": "Fogueira acesa",
+      "repeatable": false,
+      "parameter": null,
+      "effects": [{ "kind": "milestone", "milestoneId": "fire_lit", "value": true }]
+    },
+    {
+      "id": "new_bow_crafted",
+      "name": "Arco novo fabricado",
+      "repeatable": false,
+      "parameter": null,
+      "effects": [{ "kind": "milestone", "milestoneId": "new_bow_crafted", "value": true }]
+    },
+    {
+      "id": "old_bow_recovered",
+      "name": "Arco antigo recuperado",
+      "repeatable": false,
+      "parameter": null,
+      "effects": [{ "kind": "milestone", "milestoneId": "old_bow_recovered", "value": true }]
+    },
+    {
+      "id": "ending_started",
+      "name": "Início de final",
+      "repeatable": false,
+      "parameter": { "kind": "ending" },
+      "effects": [{ "kind": "ending", "endingId": "$parameter" }]
+    }
+  ],
+  "conditionKinds": [
+    { "id": "trust_minimum", "name": "Confiança mínima" },
+    { "id": "trust_maximum", "name": "Confiança máxima" },
+    { "id": "item_collected", "name": "Item já foi pego / ainda não foi pego" },
+    { "id": "item_delivered", "name": "Item já foi entregue / ainda não foi entregue" },
+    { "id": "milestone", "name": "Marco já ocorreu / ainda não ocorreu" }
+  ],
+  "reachability": {
+    "notes": "Restrições usadas para eliminar estados impossíveis na análise de cobertura.",
+    "implications": [
+      {
+        "id": "delivery_implies_collection",
+        "description": "Entregar um item implica tê-lo pego ao menos uma vez.",
+        "kind": "item_delivered_implies_collected"
+      },
+      {
+        "id": "fire_needs_flint",
+        "description": "A fogueira só acende depois de pegar a pederneira.",
+        "when": { "kind": "milestone", "milestoneId": "fire_lit", "value": true },
+        "requires": [{ "kind": "item_collected", "itemId": "flint_piece", "value": true }]
+      },
+      {
+        "id": "new_bow_needs_parts",
+        "description": "O arco novo exige fibra vegetal e galho resistente já coletados.",
+        "when": { "kind": "milestone", "milestoneId": "new_bow_crafted", "value": true },
+        "requires": [
+          { "kind": "item_collected", "itemId": "plant_fiber", "value": true },
+          { "kind": "item_collected", "itemId": "sturdy_branch", "value": true }
+        ]
+      },
+      {
+        "id": "new_bow_item_needs_craft",
+        "description": "O arco novo só pode ser pego depois de fabricado.",
+        "when": { "kind": "item_collected", "itemId": "new_bow", "value": true },
+        "requires": [{ "kind": "milestone", "milestoneId": "new_bow_crafted", "value": true }]
+      },
+      {
+        "id": "old_bow_item_needs_recovery",
+        "description": "O arco antigo só pode ser pego depois de recuperado sob a pedra.",
+        "when": { "kind": "item_collected", "itemId": "old_bow", "value": true },
+        "requires": [{ "kind": "milestone", "milestoneId": "old_bow_recovered", "value": true }]
+      },
+      {
+        "id": "old_bow_recovery_needs_lever",
+        "description": "Recuperar o arco antigo exige um galho resistente como alavanca.",
+        "when": { "kind": "milestone", "milestoneId": "old_bow_recovered", "value": true },
+        "requires": [{ "kind": "item_collected", "itemId": "sturdy_branch", "value": true }]
+      }
+    ],
+    "endingConstraints": [
+      {
+        "endingId": "old_bow_low_trust",
+        "requires": [
+          { "kind": "milestone", "milestoneId": "old_bow_recovered", "value": true },
+          { "kind": "item_delivered", "itemId": "old_bow", "value": true }
+        ],
+        "trust": { "minimum": null, "maximum": 5 }
+      },
+      {
+        "endingId": "old_bow_high_trust",
+        "requires": [
+          { "kind": "milestone", "milestoneId": "old_bow_recovered", "value": true },
+          { "kind": "item_delivered", "itemId": "old_bow", "value": true }
+        ],
+        "trust": { "minimum": 6, "maximum": null }
+      },
+      {
+        "endingId": "new_bow",
+        "requires": [
+          { "kind": "milestone", "milestoneId": "new_bow_crafted", "value": true },
+          { "kind": "item_delivered", "itemId": "new_bow", "value": true }
+        ],
+        "trust": { "minimum": null, "maximum": null }
+      },
+      {
+        "endingId": "dawn_timeout",
+        "requires": [],
+        "trust": { "minimum": null, "maximum": null }
+      }
+    ]
+  },
+  "migrations": {
+    "supportedProjectFormatVersions": [1],
+    "supportedGameSchemaVersions": [1],
+    "renamedIds": {}
+  }
+}

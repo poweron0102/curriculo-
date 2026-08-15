@@ -1,0 +1,451 @@
+{
+  "format": "aramara-dialogue-project",
+  "formatVersion": 1,
+  "gameSchemaVersion": 1,
+  "metadata": {
+    "projectId": "project_aramara_bow_minigame_default",
+    "name": "Diálogos do minigame do arco",
+    "author": "",
+    "revisionComment": "Projeto inicial extraído dos SoundData atuais do minigame do arco.",
+    "createdAt": "2026-08-15T00:00:00.000Z",
+    "updatedAt": "2026-08-15T00:00:00.000Z"
+  },
+  "sequences": [
+    {
+      "id": "seq_minigame_start",
+      "trigger": { "type": "minigame_start" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_manual_conversation",
+      "trigger": { "type": "manual_conversation" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_conversation_smalltalk",
+          "title": "Conversa comum",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Meu arco antigo ficou preso sob a grande pedra, mas a noite está acabando. Observe a floresta e escolha seu caminho.",
+            "en": "My old bow is trapped beneath the great stone, but night is ending. Choose your path."
+          },
+          "comment": "Origem: Conversation_SmallTalk. Repetível a cada conversa manual.",
+          "repeat": "every_trigger",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        },
+        {
+          "id": "line_conversation_bow_recipe",
+          "title": "Conversa sobre a receita",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Agora confio em você. Una as duas pontas da fibra às extremidades do galho resistente; assim poderá construir um novo arco.",
+            "en": "I trust you now. Tie both ends of the fiber to the sturdy branch to build a new bow."
+          },
+          "comment": "Origem: Conversation_BowRecipe. Desbloqueia a receita no runtime futuro.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": 1, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_collected_animal_hide",
+      "trigger": { "type": "first_item_collected", "parameter": "animal_hide" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_bird_feather",
+      "trigger": { "type": "first_item_collected", "parameter": "bird_feather" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_common_branch",
+      "trigger": { "type": "first_item_collected", "parameter": "common_branch" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_flint_piece",
+      "trigger": { "type": "first_item_collected", "parameter": "flint_piece" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_new_bow",
+      "trigger": { "type": "first_item_collected", "parameter": "new_bow" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_old_bow",
+      "trigger": { "type": "first_item_collected", "parameter": "old_bow" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_plant_fiber",
+      "trigger": { "type": "first_item_collected", "parameter": "plant_fiber" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_sturdy_branch",
+      "trigger": { "type": "first_item_collected", "parameter": "sturdy_branch" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_collected_wild_berries",
+      "trigger": { "type": "first_item_collected", "parameter": "wild_berries" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_delivered_animal_hide",
+      "trigger": { "type": "first_item_delivered", "parameter": "animal_hide" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_animal_hide",
+          "title": "Entrega da pele de animal",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Esta pele vai nos proteger do frio da madrugada. Você conquistou um pouco mais da minha confiança.",
+            "en": "This hide will protect us from the cold dawn. You have earned more of my trust."
+          },
+          "comment": "Origem: Offering_AnimalHide.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_delivered_bird_feather",
+      "trigger": { "type": "first_item_delivered", "parameter": "bird_feather" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_bird_feather",
+          "title": "Entrega da pena de pássaro",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Esta pena me lembra que a floresta sempre deixa sinais para quem observa com cuidado.",
+            "en": "This feather reminds me that the forest leaves signs for careful observers."
+          },
+          "comment": "Origem: Offering_BirdFeather.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_delivered_common_branch",
+      "trigger": { "type": "first_item_delivered", "parameter": "common_branch" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_common_branch",
+          "title": "Entrega do galho comum",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Este galho é frágil. Pode ser útil na fogueira, mas quebraria sob o peso de uma pedra.",
+            "en": "This branch is fragile. It may feed the fire, but it would break beneath a stone."
+          },
+          "comment": "Origem: Offering_CommonBranch.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_delivered_flint_piece",
+      "trigger": { "type": "first_item_delivered", "parameter": "flint_piece" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_flint_piece",
+          "title": "Entrega da pederneira",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Bata as duas pedras perto da fogueira. Faíscas fortes podem reacender o fogo.",
+            "en": "Strike both stones near the fire. Strong sparks may rekindle it."
+          },
+          "comment": "Origem: Offering_FlintPiece.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_delivered_new_bow",
+      "trigger": { "type": "first_item_delivered", "parameter": "new_bow" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_delivered_old_bow",
+      "trigger": { "type": "first_item_delivered", "parameter": "old_bow" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_first_delivered_plant_fiber",
+      "trigger": { "type": "first_item_delivered", "parameter": "plant_fiber" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_plant_fiber",
+          "title": "Entrega da fibra vegetal",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "A fibra é forte e flexível. Com um bom galho, ela pode virar a corda de um arco.",
+            "en": "The fiber is strong and flexible. With a good branch, it can become a bowstring."
+          },
+          "comment": "Origem: Offering_PlantFiber.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_delivered_sturdy_branch",
+      "trigger": { "type": "first_item_delivered", "parameter": "sturdy_branch" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_sturdy_branch",
+          "title": "Entrega do galho resistente",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Este galho é firme e resistente. Talvez ele sirva como alavanca ou como parte de um novo arco.",
+            "en": "This branch is sturdy. It may serve as a lever or as part of a new bow."
+          },
+          "comment": "Origem: Offering_SturdyBranch.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_first_delivered_wild_berries",
+      "trigger": { "type": "first_item_delivered", "parameter": "wild_berries" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_offering_wild_berries",
+          "title": "Entrega das frutas silvestres",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Estas frutas vão nos alimentar. Obrigado por trazê-las até o acampamento.",
+            "en": "These berries will feed us. Thank you for bringing them to camp."
+          },
+          "comment": "Origem: Offering_WildBerries.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_fire_lit",
+      "trigger": { "type": "fire_lit" },
+      "enabled": false,
+      "lines": []
+    },
+    {
+      "id": "seq_new_bow_crafted",
+      "trigger": { "type": "new_bow_crafted" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_new_bow_crafted",
+          "title": "Arco novo pronto",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Você construiu um novo arco. Coloque-o na esteira quando estiver pronto para partir.",
+            "en": "You built a new bow. Place it on the mat when you are ready to leave."
+          },
+          "comment": "Origem: Offering_NewBow, remapeado para o marco de fabricação do arco novo.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_old_bow_recovered",
+      "trigger": { "type": "old_bow_recovered" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_old_bow_recovered",
+          "title": "Arco antigo recuperado",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Você encontrou meu arco antigo. Traga-o até a esteira quando decidir encerrar sua busca.",
+            "en": "You found my old bow. Bring it to the mat when you choose to end your search."
+          },
+          "comment": "Origem: Offering_OldBow, remapeado para o marco de recuperação do arco antigo.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_ending_old_bow_low_trust",
+      "trigger": { "type": "ending_started", "parameter": "old_bow_low_trust" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_ending_old_bow_low_trust",
+          "title": "Final do arco antigo com confiança baixa",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Você trouxe o arco antigo, mas ainda conheço pouco suas intenções. Vou aceitá-lo com cautela.",
+            "en": "You brought back the old bow, but I still know little of your intentions. I accept it cautiously."
+          },
+          "comment": "Origem: Ending_OldBowLowTrust.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_ending_old_bow_high_trust",
+      "trigger": { "type": "ending_started", "parameter": "old_bow_high_trust" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_ending_old_bow_high_trust",
+          "title": "Final do arco antigo com confiança alta",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Você recuperou meu arco antigo e mostrou respeito pela floresta. Obrigado por caminhar ao meu lado.",
+            "en": "You recovered my old bow and respected the forest. Thank you for walking beside me."
+          },
+          "comment": "Origem: Ending_OldBowHighTrust.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_ending_new_bow",
+      "trigger": { "type": "ending_started", "parameter": "new_bow" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_ending_new_bow",
+          "title": "Final do arco novo",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "Este novo arco nasceu das suas escolhas e daquilo que a floresta ofereceu. Você provou que merece minha confiança.",
+            "en": "This new bow was born from your choices and what the forest offered. You earned my trust."
+          },
+          "comment": "Origem: Ending_NewBow.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "seq_ending_dawn_timeout",
+      "trigger": { "type": "ending_started", "parameter": "dawn_timeout" },
+      "enabled": true,
+      "lines": [
+        {
+          "id": "line_ending_dawn_timeout",
+          "title": "Final por amanhecer",
+          "speakerId": "indio",
+          "text": {
+            "pt-BR": "O amanhecer chegou antes de concluirmos nossa busca. Voltaremos quando a floresta nos der outra oportunidade.",
+            "en": "Dawn arrived before we completed our search. We will return for another opportunity."
+          },
+          "comment": "Origem: Ending_DawnTimeout.",
+          "repeat": "once_per_session",
+          "conditions": {
+            "trust": { "minimum": null, "maximum": null },
+            "itemStates": [],
+            "milestones": []
+          },
+          "archived": false
+        }
+      ]
+    }
+  ],
+  "editor": {
+    "selectedSequenceId": "seq_manual_conversation",
+    "selectedLineId": "line_conversation_smalltalk",
+    "viewport": { "x": 0, "y": 0, "zoom": 1 }
+  }
+}

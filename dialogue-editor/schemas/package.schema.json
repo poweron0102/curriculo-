@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aramara.local/schemas/package.schema.json",
+  "title": "Pacote final de diálogos do minigame do arco",
+  "description": "Handoff estruturado para o futuro importador Unity. Não contém falas arquivadas, viewport, histórico, áudio nem estado do simulador.",
+  "type": "object",
+  "required": [
+    "format",
+    "formatVersion",
+    "gameSchemaVersion",
+    "generatedAt",
+    "metadata",
+    "sequences"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "aramara-dialogue-package" },
+    "formatVersion": { "type": "integer", "minimum": 1 },
+    "gameSchemaVersion": { "type": "integer", "minimum": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "metadata": {
+      "type": "object",
+      "required": ["projectId", "name", "updatedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "projectId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "author": { "type": "string" },
+        "revisionComment": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "sequences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "trigger", "lines"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "trigger": {
+            "type": "object",
+            "required": ["type"],
+            "additionalProperties": false,
+            "properties": {
+              "type": { "type": "string", "minLength": 1 },
+              "parameter": { "type": ["string", "null"] }
+            }
+          },
+          "lines": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["id", "title", "speakerId", "text", "repeat", "conditions"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "title": { "type": "string" },
+                "speakerId": { "type": "string", "minLength": 1 },
+                "text": {
+                  "type": "object",
+                  "required": ["pt-BR", "en"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "pt-BR": { "type": "string" },
+                    "en": { "type": "string" }
+                  }
+                },
+                "comment": { "type": "string" },
+                "repeat": { "enum": ["once_per_session", "every_trigger"] },
+                "conditions": {
+                  "type": "object",
+                  "required": ["trust", "itemStates", "milestones"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "trust": {
+                      "type": "object",
+                      "required": ["minimum", "maximum"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "minimum": { "type": ["integer", "null"], "minimum": 0 },
+                        "maximum": { "type": ["integer", "null"], "minimum": 0 }
+                      }
+                    },
+                    "itemStates": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["itemId", "state", "value"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "itemId": { "type": "string" },
+                          "state": { "enum": ["collected", "delivered"] },
+                          "value": { "type": "boolean" }
+                        }
+                      }
+                    },
+                    "milestones": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["milestoneId", "value"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "milestoneId": { "type": "string" },
+                          "value": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "acceptedWarnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "sequenceId": { "type": ["string", "null"] },
+          "lineId": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Editor de diálogos — Minigame do arco</title>
+    <link rel="stylesheet" href="./styles/app.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8F%B9%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div class="small-screen-warning" role="note">
+      Esta tela é pequena demais para o editor. Use um computador com janela de pelo menos 1024&nbsp;px de largura.
+    </div>
+
+    <div id="app" class="app" hidden>
+      <header class="topbar">
+        <div class="topbar__identity">
+          <label class="topbar__name">
+            <span class="visually-hidden">Nome do projeto</span>
+            <input id="project-name" type="text" autocomplete="off" spellcheck="false" />
+          </label>
+          <span id="autosave-status" class="autosave" data-state="idle">Carregando…</span>
+        </div>
+
+        <div class="topbar__actions">
+          <button id="undo-button" type="button" class="button" title="Desfazer (Ctrl+Z)" disabled>Desfazer</button>
+          <button id="redo-button" type="button" class="button" title="Refazer (Ctrl+Shift+Z)" disabled>Refazer</button>
+          <span class="topbar__divider" aria-hidden="true"></span>
+          <button id="simulator-button" type="button" class="button">Simulador</button>
+          <button id="import-button" type="button" class="button">Importar</button>
+          <button id="export-project-button" type="button" class="button">Exportar projeto</button>
+          <button id="export-package-button" type="button" class="button button--primary">
+            Exportar pacote final
+          </button>
+          <input id="import-input" type="file" accept="application/json,.json" hidden />
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="panel panel--left" aria-label="Gatilhos e sequências">
+          <div class="panel__header">
+            <h2 class="panel__title">Gatilhos e sequências</h2>
+          </div>
+          <div class="filters">
+            <label class="field">
+              <span class="visually-hidden">Buscar</span>
+              <input
+                id="search-input"
+                type="search"
+                placeholder="Buscar por título, texto ou personagem…"
+                autocomplete="off"
+              />
+            </label>
+            <label class="field field--inline">
+              <span>Gatilho</span>
+              <select id="filter-trigger"><option value="">Todos</option></select>
+            </label>
+            <div class="filters__row">
+              <label class="field field--inline">
+                <span>Personagem</span>
+                <select id="filter-speaker"><option value="">Todos</option></select>
+              </label>
+              <label class="field field--inline">
+                <span>Situação</span>
+                <select id="filter-status">
+                  <option value="">Tudo</option>
+                  <option value="errors">Com erro</option>
+                  <option value="warnings">Com aviso</option>
+                  <option value="missing-translation">Tradução ausente</option>
+                  <option value="archived">Arquivadas</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <nav id="sequence-list" class="sequence-list" aria-label="Lista de sequências"></nav>
+        </aside>
+
+        <section class="panel panel--center" aria-label="Grafo das falas">
+          <div class="panel__header graph__header">
+            <h2 class="panel__title" id="graph-title">Sequência</h2>
+            <div class="graph__controls">
+              <button id="add-line-button" type="button" class="button button--primary">Nova fala</button>
+              <label class="field field--inline field--toggle">
+                <input id="sequence-enabled" type="checkbox" />
+                <span>Sequência ativa</span>
+              </label>
+              <span class="topbar__divider" aria-hidden="true"></span>
+              <button id="zoom-out" type="button" class="button button--icon" title="Diminuir zoom">−</button>
+              <button id="zoom-in" type="button" class="button button--icon" title="Aumentar zoom">+</button>
+              <button id="zoom-fit" type="button" class="button">Ajustar tudo</button>
+            </div>
+          </div>
+          <div id="graph-view" class="graph" tabindex="0"></div>
+          <p id="graph-hint" class="graph__hint"></p>
+        </section>
+
+        <aside class="panel panel--right" aria-label="Fala selecionada">
+          <div class="panel__header">
+            <h2 class="panel__title">Fala selecionada</h2>
+          </div>
+          <div id="inspector" class="inspector"></div>
+        </aside>
+      </main>
+
+      <section class="panel panel--bottom" aria-label="Validação">
+        <div class="panel__header validation__header">
+          <h2 class="panel__title">Validação</h2>
+          <div id="validation-summary" class="validation__summary"></div>
+          <button id="validation-toggle" type="button" class="button button--ghost">Ocultar</button>
+        </div>
+        <div id="validation-panel" class="validation"></div>
+      </section>
+    </div>
+
+    <dialog id="simulator-dialog" class="dialog dialog--wide">
+      <form method="dialog" class="dialog__form">
+        <header class="dialog__header">
+          <h2>Simulador de cenário</h2>
+          <button value="cancel" class="button button--icon" aria-label="Fechar">×</button>
+        </header>
+        <div id="simulator-body" class="dialog__body"></div>
+        <footer class="dialog__footer">
+          <button value="cancel" class="button">Fechar</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="confirm-dialog" class="dialog">
+      <form method="dialog" class="dialog__form">
+        <header class="dialog__header">
+          <h2 id="confirm-title">Confirmar</h2>
+        </header>
+        <div class="dialog__body">
+          <p id="confirm-message"></p>
+        </div>
+        <footer class="dialog__footer">
+          <button value="cancel" class="button">Cancelar</button>
+          <button id="confirm-accept" value="accept" class="button button--danger">Confirmar</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <div id="toast-area" class="toasts" aria-live="polite"></div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

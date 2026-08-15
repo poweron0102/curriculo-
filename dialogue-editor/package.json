@@ -1,0 +1,10 @@
+{
+  "name": "aramara-dialogue-editor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Editor estático de diálogos do minigame do arco do Ara Mara.",
+  "scripts": {
+    "test": "node tests/run-tests.js"
+  }
+}

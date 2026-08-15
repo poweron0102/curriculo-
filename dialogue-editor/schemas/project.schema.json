@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aramara.local/schemas/project.schema.json",
+  "title": "Projeto de diálogos do minigame do arco",
+  "description": "Arquivo editável de autoria. Documentação e validação externa; as regras de cobertura NÃO são expressáveis aqui.",
+  "type": "object",
+  "required": ["format", "formatVersion", "gameSchemaVersion", "metadata", "sequences"],
+  "properties": {
+    "format": { "const": "aramara-dialogue-project" },
+    "formatVersion": { "type": "integer", "minimum": 1 },
+    "gameSchemaVersion": { "type": "integer", "minimum": 1 },
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "sequences": { "type": "array", "items": { "$ref": "#/$defs/sequence" } },
+    "editor": { "$ref": "#/$defs/editor" }
+  },
+  "$defs": {
+    "metadata": {
+      "type": "object",
+      "required": ["projectId", "name", "createdAt", "updatedAt"],
+      "properties": {
+        "projectId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "author": { "type": "string" },
+        "revisionComment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "parameter": { "type": ["string", "null"] }
+      }
+    },
+    "sequence": {
+      "type": "object",
+      "required": ["id", "trigger", "enabled", "lines"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "trigger": { "$ref": "#/$defs/trigger" },
+        "enabled": { "type": "boolean" },
+        "lines": { "type": "array", "items": { "$ref": "#/$defs/line" } }
+      }
+    },
+    "line": {
+      "type": "object",
+      "required": ["id", "title", "speakerId", "text", "repeat", "conditions", "archived"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string" },
+        "speakerId": { "type": "string", "minLength": 1 },
+        "text": {
+          "type": "object",
+          "properties": {
+            "pt-BR": { "type": "string" },
+            "en": { "type": "string" }
+          }
+        },
+        "comment": { "type": "string" },
+        "repeat": { "enum": ["once_per_session", "every_trigger"] },
+        "conditions": { "$ref": "#/$defs/conditions" },
+        "archived": { "type": "boolean" }
+      }
+    },
+    "conditions": {
+      "type": "object",
+      "properties": {
+        "trust": {
+          "type": "object",
+          "properties": {
+            "minimum": { "type": ["integer", "null"], "minimum": 0 },
+            "maximum": { "type": ["integer", "null"], "minimum": 0 }
+          }
+        },
+        "itemStates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["itemId", "state", "value"],
+            "properties": {
+              "itemId": { "type": "string", "minLength": 1 },
+              "state": { "enum": ["collected", "delivered"] },
+              "value": { "type": "boolean" }
+            }
+          }
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["milestoneId", "value"],
+            "properties": {
+              "milestoneId": { "type": "string", "minLength": 1 },
+              "value": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "editor": {
+      "type": "object",
+      "properties": {
+        "selectedSequenceId": { "type": ["string", "null"] },
+        "selectedLineId": { "type": ["string", "null"] },
+        "viewport": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "zoom": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}
