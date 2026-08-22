@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>melhor_linguagem v0.1.0 — Rust</title>
+<meta name="author" content="Nathan Pinheiro">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="deck">
+
+<div id="viewport">
+<div id="stage">
+
+  <!-- ================= BARRA DO COMPILADOR ================= -->
+  <header id="cbar">
+    <div class="cbar-left">
+      <span id="cbar-verb">Compiling</span>
+      <span id="cbar-crate">melhor_linguagem</span>
+      <span id="cbar-ver">v0.1.0</span>
+      <span id="cbar-path">(file:///apresentacao)</span>
+    </div>
+    <div class="cbar-mid">
+      <div id="progress"><div id="progress-fill"></div></div>
+      <span id="cbar-elapsed">0.00s</span>
+    </div>
+    <div class="cbar-right">
+      <span id="cbar-unit">unit 1/16</span>
+      <span id="cbar-count">1/8</span>
+      <span class="cbar-flag" id="flag-mute" title="áudio">audio</span>
+      <span class="cbar-flag" id="flag-motion" title="animação">anim</span>
+    </div>
+  </header>
+
+  <!-- ================= SLIDES ================= -->
+  <main id="slides">
+
+  <!-- ---------------------------------------------------------------- 1 -->
+  <section class="slide" id="c1" data-chapter="1" data-budget="20"
+           data-file="Cargo.toml" data-title="Abertura"
+           data-log="Compiling melhor_linguagem v0.1.0 (file:///apresentacao)" data-log-v="">
+    <div class="slide-head">
+      <span class="slide-file"><b>reading</b> Cargo.toml</span>
+      <span class="slide-tag">slide 1 / 8</span>
+    </div>
+    <div class="slide-body center">
+      <div class="row" style="align-items:center;gap:56px">
+        <div class="col" style="flex:1.25">
+          <div class="frag" data-f="1" data-log="resolving package metadata" data-log-v="ok">
+            <h1 class="big">Rust<img class="ferris-inline" src="assets/img/ferris.png" alt=""></h1>
+            <h2 class="sub">A melhor linguagem de programação<span style="color:var(--rust)">*</span></h2>
+            <p class="footnote" style="margin-top:14px"><code>* fonte: minha opinião</code></p>
+          </div>
+        </div>
+        <div class="col" style="flex:1">
+          <div class="code sm">
+            <div class="code-head" data-l="toml"><span class="dot"></span> Cargo.toml <span class="lang">toml</span></div>
+<pre><code data-lang="toml">[package]
+name    = "melhor_linguagem"
+version = "0.1.0"
+authors = ["Nathan Pinheiro"]
+edition = "2024"
+
+[package.metadata.class]
+code = "TCC00304"</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="frag" data-f="2" data-log="applying presentation lints" data-log-v="warn" data-lvl="warn">
+        <div class="diagnostic warn" style="font-size:22px">
+<span class="d-warn">warning</span><span class="d-msg">: crate `cpp` renamed to `rust--` for this presentation</span>
+<span class="d-gut">  |</span>
+<span class="d-gut">  |</span>  C     = C
+<span class="d-gut">  |</span>  C++   = <span class="d-warn">rust--</span>
+<span class="d-gut">  |</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: por respeito histórico, C continua sendo chamado de C
+<span class="d-gut">  =</span> <span class="d-note">note</span>: `#[allow(opinion)]` on by default</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- 2 -->
+  <section class="slide" id="c2" data-chapter="2" data-budget="20"
+           data-file="src/mascotes.rs" data-title="Os mascotes"
+           data-log="Checking mascotes" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>mascotes.rs</span>
+      <span class="slide-tag">slide 2 / 8</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Antes de começar: os mascotes</h2>
+      <div class="mascots">
+        <div class="mascot rust frag" data-f="1" data-log="loading assets/img/ferris.png" data-log-v="ok">
+          <div class="art"><img src="assets/img/ferris.png" alt="Ferris, o caranguejo do Rust"></div>
+          <div class="lang">Rust</div>
+          <div class="who">Ferris</div>
+          <div class="role">Mascote <b>não oficial</b> da comunidade Rust.</div>
+          <div class="credit">CC0 — rustacean.net</div>
+        </div>
+        <div class="mascot cppm pixel frag" data-f="2" data-log="loading assets/img/keith.png" data-log-v="ok">
+          <div class="art"><img src="assets/img/keith.png" alt="Keith, o rato meme do C++"></div>
+          <div class="lang">Rust--</div>
+          <div class="who">Keith</div>
+          <div class="role">Meme da internet associado ao C++.</div>
+          <div class="credit">meme — autoria não declarada · 325×185, ampliado sem suavização</div>
+        </div>
+      </div>
+      <div class="frag" data-f="3" data-log="verifying mascot claims" data-log-v="ok">
+        <div class="diagnostic ok xs">
+<span class="d-note">note</span><span class="d-msg">: Keith NÃO é o mascote oficial do C++ — é um meme da internet</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: Ferris é o mascote <b>não oficial</b> da comunidade Rust · <span class="d-dim">rust-lang.org</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- 3 -->
+  <section class="slide" id="c3" data-chapter="3" data-budget="35"
+           data-file="src/sintaxe.rs" data-title="Sintaxe: quatro linguagens"
+           data-log="Checking legibilidade" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>sintaxe.rs</span>
+      <span class="slide-tag">slide 3 / 8</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Rust pode ser surpreendentemente simples</h2>
+      <div class="grid2x2">
+        <div class="code sm frag" data-f="1" data-log="iterando com índice: python" data-log-v="ok">
+          <div class="code-head" data-l="python"><span class="dot"></span> python <span class="lang">python</span></div>
+<pre><code data-lang="python">for idx, numero in enumerate(numeros):
+    print(f"{idx} -&gt; {numero}")</code></pre>
+        </div>
+        <div class="code sm hl frag" data-f="2" data-log="iterando com índice: rust" data-log-v="ok">
+          <div class="code-head" data-l="rust"><span class="dot"></span> rust <span class="lang">rust</span></div>
+<pre><code data-lang="rust">for (idx, numero) in numeros.iter().enumerate() {
+    println!("{idx} -&gt; {numero}");
+}</code></pre>
+        </div>
+        <div class="code sm frag" data-f="3" data-log="iterando com índice: java" data-log-v="ok">
+          <div class="code-head" data-l="java"><span class="dot"></span> java <span class="lang">java</span></div>
+<pre><code data-lang="java">for (int idx = 0; idx &lt; numeros.size(); idx++) {
+    int numero = numeros.get(idx);
+    System.out.println(idx + " -&gt; " + numero);
+}</code></pre>
+        </div>
+        <div class="code sm frag" data-f="4" data-log="iterando com índice: rust--" data-log-v="ok">
+          <div class="code-head" data-l="cpp"><span class="dot"></span> rust-- <span class="lang">c++</span></div>
+<pre><code data-lang="cpp">for (std::size_t idx = 0; idx &lt; numeros.size(); ++idx) {
+    const auto&amp; numero = numeros[idx];
+    std::cout &lt;&lt; idx &lt;&lt; " -&gt; " &lt;&lt; numero &lt;&lt; '\n';
+}</code></pre>
+        </div>
+      </div>
+      <div class="frag" data-f="5" data-log="conclusão: ergonomia" data-log-v="ok">
+        <p class="thesis">Uma linguagem de sistemas não precisa parecer difícil de ler.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 4a -->
+  <section class="slide" id="c4a" data-chapter="4" data-budget="23"
+           data-file="src/ownership.rs" data-title="Ownership"
+           data-log="Checking ownership" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>ownership.rs</span>
+      <span class="slide-tag">slide 4 / 8 · ownership</span>
+    </div>
+    <div class="slide-body">
+      <p class="kicker">o verdadeiro motivo</p>
+      <h2 class="title">Ownership</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code lg frag" data-f="1">
+            <div class="code-head" data-l="rust"><span class="dot"></span> ownership <span class="lang">rust</span></div>
+<pre><code data-lang="rust">{
+    let nome = String::from("Ferris");
+    // `nome` é o dono da String
+}   // fim do escopo: o recurso pode ser liberado</code></pre>
+          </div>
+          <div class="frag" data-f="2">
+            <p class="lede">Todo recurso possui um <em>responsável pela sua existência</em>.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flow frag" data-f="2" style="font-size:23px">
+            <div class="step">valor criado</div>
+            <div class="arrow">↓</div>
+            <div class="step">uma variável é a <b>dona</b></div>
+            <div class="arrow">↓</div>
+            <div class="step">o dono sai de escopo</div>
+            <div class="arrow">↓</div>
+            <div class="step end">recurso liberado automaticamente</div>
+          </div>
+          <div class="frag" data-f="3" data-log="memory model: no mandatory GC" data-log-v="ok">
+            <div class="diagnostic ok xs">
+<span class="d-note">note</span><span class="d-msg">: segurança de memória sem depender de</span>
+<span class="d-gut">   </span>         <span class="d-msg">garbage collector</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: o modelo é da linguagem — não é uma proibição
+<span class="d-gut">   </span>       de qualquer GC em biblioteca
+<span class="d-gut">  =</span> <span class="d-dim">fonte primária: Rust Book ch04-00</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 4b -->
+  <section class="slide" id="c4b" data-chapter="4" data-budget="23"
+           data-file="src/borrowing.rs" data-title="Borrowing"
+           data-log="Checking borrows" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>borrowing.rs</span>
+      <span class="slide-tag">slide 4 / 8 · borrowing</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Borrowing</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code sm frag" data-f="1">
+            <div class="code-head" data-l="rust"><span class="dot"></span> empréstimo imutável <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn imprimir(numeros: &amp;[i32]) {
+    // lê os dados sem tomar posse deles
+}</code></pre>
+          </div>
+          <div class="code sm frag" data-f="1">
+            <div class="code-head" data-l="rust"><span class="dot"></span> empréstimo mutável <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn ordenar(numeros: &amp;mut [i32]) {
+    // recebe acesso mutável exclusivo
+}</code></pre>
+          </div>
+          <div class="frag" data-f="2">
+            <div class="diagnostic ok" style="text-align:center;font-size:30px;line-height:1.35">
+<b style="color:var(--green)">VÁRIOS LEITORES</b>
+<span class="d-dim">OU</span>
+<b style="color:var(--yellow)">UM ESCRITOR</b></div>
+            <p class="footnote" style="margin-top:10px">regra <b>simplificada</b> de borrowing — referências devem sempre ser válidas</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="code xs frag" data-f="3">
+            <div class="code-head" data-l="rust"><span class="dot"></span> e se as duas coisas ao mesmo tempo? <span class="lang">rust</span></div>
+<pre><code data-lang="rust">let mut s = String::from("hello");
+
+let r1 = &amp;mut s;
+let r2 = &amp;mut s;
+
+println!("{}, {}", r1, r2);</code></pre>
+          </div>
+          <div class="frag" data-f="4" data-sound="error" data-log="borrow check failed" data-log-v="error" data-lvl="err">
+            <div class="diagnostic xs">
+<span class="d-err">error[E0499]</span><span class="d-msg">: cannot borrow `s` as mutable more than once at a time</span>
+<span class="d-loc"> --&gt; src/main.rs:4:10</span>
+<span class="d-gut">  |</span>
+<span class="d-gut">3 |</span> <span class="d-src">let r1 = &amp;mut s;</span>
+<span class="d-gut">  |</span>          <span class="d-mark">------ first mutable borrow occurs here</span>
+<span class="d-gut">4 |</span> <span class="d-src">let r2 = &amp;mut s;</span>
+<span class="d-gut">  |</span>          <span class="d-caret">^^^^^^ second mutable borrow occurs here</span>
+<span class="d-gut">5 |</span>
+<span class="d-gut">6 |</span> <span class="d-src">println!("{}, {}", r1, r2);</span>
+<span class="d-gut">  |</span>                    <span class="d-mark">-- first borrow later used here</span>
+<span class="d-gut">  =</span> <span class="d-dim">fonte primária: Rust Book ch04-02</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 4c -->
+  <section class="slide" id="c4c" data-chapter="4" data-budget="24"
+           data-file="src/lifetimes.rs" data-title="Lifetimes"
+           data-log="Checking lifetimes" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>lifetimes.rs</span>
+      <span class="slide-tag">slide 4 / 8 · lifetimes</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Lifetimes</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="rust"><span class="dot"></span> quem vive mais? <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn main() {
+    let r;
+    {
+        let x = 5;
+        r = &amp;x;
+    }
+    println!("r: {r}");
+}</code></pre>
+          </div>
+          <div class="frag" data-f="3">
+            <div class="diagnostic ok xs">
+<span class="d-note">note</span><span class="d-msg">: lifetimes NÃO fazem o objeto viver mais tempo</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: eles permitem ao compilador <b>verificar</b> se uma referência
+<span class="d-gut">   </span>       seria usada depois que o dado deixou de ser válido
+<span class="d-gut">  =</span> <span class="d-dim">fonte primária: Rust Book ch10-03</span></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="lt">
+            <div class="frag" data-f="1">
+              <div class="lt-case">
+                <div class="lt-label">objeto</div>
+                <div class="lt-track"><div class="lt-bar obj" style="--l:6%;--w:74%"><span class="cap">x vive aqui</span></div></div>
+                <div></div>
+              </div>
+              <div class="lt-case">
+                <div class="lt-label">referência</div>
+                <div class="lt-track"><div class="lt-bar ref" style="--l:22%;--w:44%"><span class="cap">&amp;x usada aqui</span></div></div>
+                <div class="lt-verdict ok">✓</div>
+              </div>
+              <div class="lt-scale"><div></div><div class="lt-ruler"><span>início</span><span>tempo →</span><span>fim</span></div><div></div></div>
+            </div>
+            <div class="frag" data-f="2" data-sound="error" data-log="lifetime check failed" data-log-v="error" data-lvl="err">
+              <div class="lt-case">
+                <div class="lt-label">objeto</div>
+                <div class="lt-track"><div class="lt-bar obj" style="--l:6%;--w:34%"><span class="cap">x vive aqui</span></div></div>
+                <div></div>
+              </div>
+              <div class="lt-case">
+                <div class="lt-label">referência</div>
+                <div class="lt-track"><div class="lt-bar ref bad" style="--l:22%;--w:70%"><span class="cap">&amp;x ainda usada aqui</span></div></div>
+                <div class="lt-verdict bad">✗</div>
+              </div>
+              <div class="lt-scale"><div></div><div class="lt-ruler"><span>início</span><span>tempo →</span><span>fim</span></div><div></div></div>
+            </div>
+          </div>
+          <div class="frag" data-f="2">
+            <div class="diagnostic xs">
+<span class="d-err">error[E0597]</span><span class="d-msg">: `x` does not live long enough</span>
+<span class="d-loc"> --&gt; src/main.rs:5:13</span>
+<span class="d-gut">  |</span>
+<span class="d-gut">4 |</span> <span class="d-src">    let x = 5;</span>
+<span class="d-gut">  |</span>         <span class="d-mark">- binding `x` declared here</span>
+<span class="d-gut">5 |</span> <span class="d-src">    r = &amp;x;</span>
+<span class="d-gut">  |</span>         <span class="d-caret">^^ borrowed value does not live long enough</span>
+<span class="d-gut">6 |</span> <span class="d-src">}</span>
+<span class="d-gut">  |</span> <span class="d-mark">- `x` dropped here while still borrowed</span>
+<span class="d-gut">7 |</span> <span class="d-src">    println!("r: {r}");</span>
+<span class="d-gut">  |</span>                  <span class="d-mark">--- borrow later used here</span></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- 5 -->
+  <section class="slide" id="c5" data-chapter="5" data-budget="35"
+           data-file="src/uaf.c" data-title="C confia em você"
+           data-log="Compiling uaf.c (clang)" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>uaf.c</span>
+      <span class="slide-tag">slide 5 / 8</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">C confia em você</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="c"><span class="dot"></span> uaf.c <span class="lang">c</span></div>
+<pre><code data-lang="c">int *p = malloc(sizeof *p);
+
+*p = 42;
+
+free(p);
+
+printf("%d\n", *p);</code></pre>
+          </div>
+          <div class="frag" data-f="1">
+            <h3 class="title-sm" style="color:var(--yellow)">O que acontece?</h3>
+          </div>
+          <div class="frag" data-f="2" data-log="uaf.c: aceito pelo compilador" data-log-v="ok">
+            <div class="term">
+<span class="prompt">$</span> <span class="cmd">clang -O1 -g -fsanitize=address uaf.c -o uaf</span>
+<span class="out">o programa <b>compilou</b>. o problema aparece na execução.</span></div>
+          </div>
+          <div class="frag" data-f="3">
+            <h3 class="title-sm">🤷 <span style="color:var(--red)">Undefined Behavior</span></h3>
+          </div>
+        </div>
+        <div class="col">
+          <div class="frag" data-f="4" data-sound="error" data-log="uaf: runtime detectou heap-use-after-free" data-log-v="error" data-lvl="err">
+            <div class="term" style="border-left:4px solid var(--red)">
+<span class="prompt">$</span> <span class="cmd">./uaf</span>
+<span class="bad">==1==ERROR: AddressSanitizer: heap-use-after-free</span>
+<span class="out">READ of size 4 at 0x… thread T0</span>
+<span class="out">    #0 main uaf.c:9</span>
+
+<span class="bad">SUMMARY: AddressSanitizer: heap-use-after-free</span>
+<span class="out">exit status ≠ 0</span></div>
+            <div class="seal-row" style="margin-top:12px">
+              <span class="seal direct"><b>validado diretamente</b> clang 17.0.0 · -O1 -g -fsanitize=address</span>
+            </div>
+          </div>
+          <div class="frag" data-f="5">
+            <div class="diagnostic ok xs">
+<span class="d-note">note</span><span class="d-msg">: depois de `free(p)`, `*p` acessa objeto cujo lifetime terminou</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: em C isso é <b>comportamento indefinido</b> — o valor não é previsível
+<span class="d-gut">  =</span> <span class="d-help">help</span>: C está fazendo o que prometeu: controle direto sobre memória
+<span class="d-gut">  =</span> <span class="d-help">help</span>: C++ moderno tem RAII, `unique_ptr`, `shared_ptr`, containers
+<span class="d-gut">  =</span> <span class="d-note">note</span>: Rust move essas restrições para o ownership e os tipos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- 6 -->
+  <section class="slide" id="c6" data-chapter="6" data-budget="30"
+           data-file="src/threads.rs" data-title="Threads e data races"
+           data-log="Checking Send + Sync" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>threads.rs</span>
+      <span class="slide-tag">slide 6 / 8</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Threads: o compilador fica ainda mais paranoico</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="term" style="font-size:19px">
+<span class="info">thread 1</span> ────────┐
+                 ├──▶ <b style="color:var(--yellow)">estado compartilhado</b>
+<span class="info">thread 2</span> ────────┘</div>
+          <div class="frag" data-f="1">
+            <h3 class="title-sm" style="font-size:32px">Sem sincronização: <span style="color:var(--red)">Data Race 💥</span></h3>
+          </div>
+          <div class="code xs frag" data-f="2">
+            <div class="code-head" data-l="rust"><span class="dot"></span> tentando compartilhar um Rc entre threads <span class="lang">rust</span></div>
+<pre><code data-lang="rust">let contador = Rc::new(Mutex::new(0));
+
+for _ in 0..10 {
+    let c = Rc::clone(&amp;contador);
+    thread::spawn(move || {
+        *c.lock().unwrap() += 1;
+    });
+}</code></pre>
+          </div>
+        </div>
+        <div class="col">
+          <div class="frag" data-f="3" data-sound="error" data-log="trait bound `Send` não satisfeito" data-log-v="error" data-lvl="err">
+            <div class="diagnostic xs">
+<span class="d-err">error[E0277]</span><span class="d-msg">: `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;` cannot be sent</span>
+<span class="d-gut">   </span>         <span class="d-msg">between threads safely</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: within this closure, the trait `Send` is not implemented
+<span class="d-gut">   </span>       for `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;`
+<span class="d-gut">  =</span> <span class="d-dim">fonte primária: Rust Book ch16-03</span></div>
+          </div>
+          <div class="frag" data-f="4" data-log="Send + Sync satisfeitos" data-log-v="ok">
+            <div class="code" style="align-self:flex-start">
+              <div class="code-head" data-l="rust"><span class="dot"></span> a correção <span class="lang">rust</span></div>
+<pre><code data-lang="rust">Arc&lt;Mutex&lt;T&gt;&gt;</code></pre>
+            </div>
+            <p class="thesis" style="font-size:27px;margin-top:14px">Compartilhar estado mutável exige declarar como a sincronização acontece.</p>
+          </div>
+          <div class="frag" data-f="5">
+            <div class="diagnostic warn xs">
+<span class="d-warn">warning</span><span class="d-msg">: `data race` ≠ `race condition`</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: ownership, tipos, `Send` e `Sync` impedem <b>várias classes</b> de
+<span class="d-gut">   </span>       acesso concorrente inseguro ainda em compilação
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: Rust <b>não</b> torna todo programa concorrente correto</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7a -->
+  <section class="slide" id="c7a" data-chapter="7" data-budget="10"
+           data-file="src/dispatch.rs" data-title="Quem escolhe o despacho?"
+           data-log="Monomorphizing" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>dispatch.rs</span>
+      <span class="slide-tag">slide 7 / 8 · a pergunta</span>
+    </div>
+    <div class="slide-body center">
+      <h2 class="title" style="font-size:66px;max-width:1600px">Quem escolhe se a abstração é estática ou dinâmica?</h2>
+      <div class="frag" data-f="1">
+        <div class="term" style="font-size:26px;line-height:1.6;margin-top:20px">
+<span class="out">Rust não tem classes no sentido tradicional. Ele separa:</span>
+
+  dados             comportamento        implementação
+    │                    │                    │
+  <b style="color:var(--rust-soft)">struct</b>              <b style="color:var(--rust-soft)">trait</b>                <b style="color:var(--rust-soft)">impl</b></div>
+      </div>
+      <div class="frag" data-f="2">
+        <div class="diagnostic ok sm">
+<span class="d-note">note</span><span class="d-msg">: Rust não possui herança tradicional de classes/structs</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: usa structs/enums, `impl`, traits, generics e trait objects</div>
+        <div class="seal-row" style="margin-top:12px">
+          <span class="seal source"><b>fonte primária</b> Rust Book ch18-01</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7b -->
+  <section class="slide" id="c7b" data-chapter="7" data-budget="10"
+           data-file="src/dispatch.rs" data-title="Rust: uma única definição"
+           data-log="Checking trait `Operacao`" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>dispatch.rs</span>
+      <span class="slide-tag">slide 7 / 8 · uma definição</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Rust — uma única definição</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="code frag" data-f="0">
+          <div class="code-head" data-l="rust"><span class="dot"></span> o contrato <span class="lang">rust</span></div>
+<pre><code data-lang="rust">trait Operacao {
+    fn calcular(&amp;self, x: i32) -&gt; i32;
+}
+
+struct Dobro;
+
+impl Operacao for Dobro {
+    fn calcular(&amp;self, x: i32) -&gt; i32 {
+        x * 2
+    }
+}</code></pre>
+        </div>
+        <div class="col">
+          <div class="frag" data-f="1">
+            <p class="lede">A mesma <code>struct</code>, o mesmo <code>trait</code> e o mesmo <code>impl</code> podem ser usados das <em>duas</em> formas.</p>
+          </div>
+          <div class="frag" data-f="2">
+            <div class="term" style="font-size:22px;line-height:1.7">
+<b style="color:var(--rust-soft)">trait Operacao</b>
+      │
+      ├── <b style="color:var(--green)">T: Operacao</b>  ───────▶ <span class="good">STATIC</span>
+      │
+      └── <b style="color:var(--yellow)">dyn Operacao</b> ───────▶ <span style="color:var(--yellow)">DYNAMIC</span></div>
+            <div class="seal-row" style="margin-top:14px">
+              <span class="seal source"><b>fonte primária</b> Rust Book ch18-02 · Reference: trait objects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7c -->
+  <section class="slide" id="c7c" data-chapter="7" data-budget="10"
+           data-file="src/dispatch.rs" data-title="Rust: static dispatch"
+           data-log="Monomorphizing `executar::&lt;Dobro&gt;`" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>dispatch.rs</span>
+      <span class="slide-tag">slide 7 / 8 · static dispatch</span>
+    </div>
+    <div class="slide-body">
+      <div class="row" style="align-items:baseline;gap:20px">
+        <h2 class="title">Static dispatch</h2>
+        <span class="badge st">tipo conhecido em compilação</span>
+      </div>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="rust"><span class="dot"></span> com trait bound <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn executar&lt;T: Operacao&gt;(op: &amp;T, x: i32) -&gt; i32 {
+    op.calcular(x)
+}</code></pre>
+          </div>
+          <div class="code sm frag" data-f="1">
+            <div class="code-head" data-l="rust"><span class="dot"></span> ou com impl Trait <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn executar(op: &amp;impl Operacao, x: i32) -&gt; i32 {
+    op.calcular(x)
+}</code></pre>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flow static frag" data-f="2" style="font-size:24px">
+            <div class="step">o tipo concreto é <b>conhecido em compilação</b></div>
+            <div class="arrow">↓</div>
+            <div class="step"><b>monomorfização</b> — uma versão por tipo usado</div>
+            <div class="arrow">↓</div>
+            <div class="step">a chamada <b>pode</b> ser inlinada</div>
+            <div class="arrow">↓</div>
+            <div class="step end">a abstração pode desaparecer</div>
+          </div>
+          <div class="frag" data-f="3">
+            <div class="diagnostic warn sm">
+<span class="d-warn">warning</span><span class="d-msg">: "pode ser inlinada", não "sempre será"</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7d -->
+  <section class="slide" id="c7d" data-chapter="7" data-budget="10"
+           data-file="src/dispatch.rs" data-title="Rust: dynamic dispatch"
+           data-log="Building vtable for `dyn Operacao`" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>dispatch.rs</span>
+      <span class="slide-tag">slide 7 / 8 · dynamic dispatch</span>
+    </div>
+    <div class="slide-body">
+      <div class="row" style="align-items:baseline;gap:20px">
+        <h2 class="title">Dynamic dispatch</h2>
+        <span class="badge dy">tipo concreto pode aparecer só em runtime</span>
+      </div>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="rust"><span class="dot"></span> trait object <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn executar(op: &amp;dyn Operacao, x: i32) -&gt; i32 {
+    op.calcular(x)
+}</code></pre>
+          </div>
+          <div class="frag" data-f="1">
+            <div class="term" style="font-size:21px">
+<span class="out">&amp;dyn Operacao carrega dois ponteiros:</span>
+
+  ┌──────────────┬──────────────┐
+  │ dados        │ vtable       │
+  └──────────────┴──────────────┘
+        │                │
+     instância      métodos do trait</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flow dynamic frag" data-f="2" style="font-size:24px">
+            <div class="step">o tipo concreto pode ser conhecido só em <b>runtime</b></div>
+            <div class="arrow">↓</div>
+            <div class="step"><b>trait object</b></div>
+            <div class="arrow">↓</div>
+            <div class="step"><b>vtable</b></div>
+            <div class="arrow">↓</div>
+            <div class="step end">chamada indireta</div>
+          </div>
+          <div class="frag" data-f="3">
+            <p class="thesis" style="font-size:32px">Em Rust, o mesmo contrato serve aos dois despachos. A escolha acontece no <em>ponto de uso</em>.</p>
+            <div class="seal-row" style="margin-top:14px">
+              <span class="seal source"><b>fonte primária</b> Reference: types/trait-object · std::keyword.dyn</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7e -->
+  <section class="slide" id="c7e" data-chapter="7" data-budget="10"
+           data-file="src/dispatch.cpp" data-title="Rust--: dois mecanismos"
+           data-log="Compiling dispatch.cpp (rust--)" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>dispatch.cpp</span>
+      <span class="slide-tag">slide 7 / 8 · rust--</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Rust-- — mecanismos diferentes</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code xs">
+            <div class="code-head" data-l="cpp"><span class="dot"></span> polimorfismo dinâmico <span class="lang">c++</span></div>
+<pre><code data-lang="cpp">class Operacao {
+public:
+    virtual int calcular(int x) const = 0;
+    virtual ~Operacao() = default;
+};
+
+class Dobro final : public Operacao {
+    int calcular(int x) const override { return x * 2; }
+};</code></pre>
+          </div>
+          <div class="code xs frag" data-f="1">
+            <div class="code-head" data-l="cpp"><span class="dot"></span> polimorfismo estático <span class="lang">c++</span></div>
+<pre><code data-lang="cpp">template &lt;typename T&gt;
+int executar(const T&amp; op, int x) { return op.calcular(x); }
+
+// opcional: formalizar o mesmo contrato em compile time
+template &lt;typename T&gt;
+concept OperacaoEstatica = requires(const T&amp; op, int x) {
+    { op.calcular(x) } -&gt; std::same_as&lt;int&gt;;
+};</code></pre>
+          </div>
+        </div>
+        <div class="col">
+          <div class="frag" data-f="2">
+            <div class="term" style="font-size:22px;line-height:1.7">
+<b style="color:var(--cpp)">template / concept</b>       ───────▶ <span class="good">STATIC</span>
+
+<b style="color:var(--cpp)">classe base + virtual</b>    ───────▶ <span style="color:var(--yellow)">DYNAMIC</span></div>
+          </div>
+          <div class="frag" data-f="3">
+            <div class="diagnostic ok sm">
+<span class="d-help">help</span><span class="d-msg">: a mesma classe concreta `Dobro` participa dos dois modelos</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: <b>não</b> é necessário criar duas classes `Dobro`
+<span class="d-gut">  =</span> <span class="d-note">note</span>: o `concept` é opcional — template sozinho já dá static dispatch
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: o contrato estático e o dinâmico são <b>mecanismos distintos</b></div>
+            <div class="seal-row" style="margin-top:12px">
+              <span class="seal direct"><b>validado diretamente</b> clang++ 17.0.0 · -O3 -std=c++20</span>
+            </div>
+          </div>
+          <div class="frag" data-f="4">
+            <p class="thesis" style="font-size:30px">Rust reutiliza o mesmo <em>trait</em> nos dois modelos; Rust-- oferece <em>mecanismos separados</em>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7f -->
+  <section class="slide" id="c7f" data-chapter="7" data-budget="10"
+           data-file="src/Dispatch.java" data-title="Java: interface e o JIT"
+           data-log="javac Dispatch.java" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>Dispatch.java</span>
+      <span class="slide-tag">slide 7 / 8 · java</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Java — decisão em runtime, com ajuda do JIT</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code xs">
+            <div class="code-head" data-l="java"><span class="dot"></span> interface <span class="lang">java</span></div>
+<pre><code data-lang="java">interface Operacao { int calcular(int x); }
+
+final class Dobro implements Operacao {
+    public int calcular(int x) { return x * 2; }
+}
+
+static int executar(Operacao op, int x) { return op.calcular(x); }</code></pre>
+          </div>
+          <div class="frag" data-f="1">
+            <div class="term" style="font-size:18px">
+<span class="prompt">$</span> <span class="cmd">javap -c -p Dispatch.class</span>
+<span class="out">static int executar(Operacao, int);
+  Code:
+     0: aload_0
+     1: iload_1
+     2: </span><b style="color:var(--java)">invokeinterface</b><span class="out"> #7,  2
+     7: ireturn</span></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="frag" data-f="2">
+            <div class="term" style="font-size:18px">
+<span class="prompt">$</span> <span class="cmd">java -Xbatch -XX:+PrintInlining DispatchBench</span>
+<span class="out">DispatchBench::executar
+  @ 2 DobroBench::calcular (4 bytes) </span><b class="good">inline (hot)</b>
+<span class="out">  \-&gt; TypeProfile (5119/5119 counts) = DobroBench</span></div>
+            <div class="seal-row" style="margin-top:12px">
+              <span class="seal direct"><b>validado diretamente</b> javac 21.0.11 · OpenJDK/HotSpot 21.0.11</span>
+            </div>
+          </div>
+          <div class="frag" data-f="3">
+            <div class="diagnostic warn xs">
+<span class="d-note">note</span><span class="d-msg">: o bytecode diz `invokeinterface`; o JIT pode</span>
+<span class="d-gut">   </span>         <span class="d-msg">devirtualizar e inlinar chamadas quentes</span>
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: <b>não</b> toda chamada de interface vira direta
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: bytecode Java vs. assembly AOT não conclui
+<span class="d-gut">   </span>          performance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 7g -->
+  <section class="slide" id="c7g" data-chapter="7" data-budget="10"
+           data-file="src/dispatch.rs" data-title="Comparação resumida"
+           data-log="Codegen units finished" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>dispatch.rs</span>
+      <span class="slide-tag">slide 7 / 8 · resumo</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Comparação resumida</h2>
+      <table class="cmp">
+        <colgroup><col><col class="rust"><col><col></colgroup>
+        <thead>
+          <tr><th>Caso</th><th>Rust</th><th>Rust--</th><th>Java</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Contrato</th><td><code>trait</code></td><td>classe abstrata / <code>concept</code></td><td><code>interface</code></td></tr>
+          <tr><th>Static dispatch</th><td><code>T: Trait</code> / <code>impl Trait</code></td><td>template / concept</td><td>não é o modelo equivalente principal</td></tr>
+          <tr><th>Dynamic dispatch</th><td><code>dyn Trait</code></td><td><code>virtual</code></td><td>interface / métodos virtuais</td></tr>
+          <tr><th>Estrutura concreta</th><td><code>struct</code></td><td><code>class</code> / <code>struct</code></td><td><code>class</code></td></tr>
+          <tr><th>Momento da decisão</th><td>compilação, no ponto de uso</td><td>depende do mecanismo escolhido</td><td>runtime, com otimizações do JIT</td></tr>
+        </tbody>
+      </table>
+      <div class="frag" data-f="1">
+        <p class="thesis" style="font-size:44px">Rust separa o comportamento da forma de despachá-lo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 8a -->
+  <section class="slide" id="c8a" data-chapter="8" data-budget="10"
+           data-file="src/conclusao.rs" data-title="Então Rust é a melhor?"
+           data-log="Checking honestidade intelectual" data-log-v="ok">
+    <div class="slide-head">
+      <span class="slide-file"><b>src/</b>conclusao.rs</span>
+      <span class="slide-tag">slide 8 / 8</span>
+    </div>
+    <div class="slide-body center">
+      <h2 class="title" style="font-size:62px">Então Rust é realmente<br>a melhor linguagem?</h2>
+      <div class="grid2 frag" data-f="1" style="align-items:start;margin-top:8px">
+        <div class="panel">
+          <h4 style="color:var(--yellow)">Ressalvas honestas</h4>
+          <ul class="tight" style="font-size:20px">
+            <li>C é simples, ubíquo e extremamente importante</li>
+            <li>C++ tem décadas de ecossistema, bibliotecas e código existente</li>
+            <li>Rust tem uma curva de aprendizado real</li>
+            <li>ownership e borrowing podem ser difíceis no começo</li>
+            <li>Rust não é a melhor ferramenta para absolutamente todo problema</li>
+          </ul>
+        </div>
+        <div class="panel rusty">
+          <h4>Rust oferece</h4>
+          <ul class="tight" style="font-size:20px">
+            <li>desempenho de linguagem de sistemas</li>
+            <li>sem garbage collector obrigatório</li>
+            <li>ownership, borrowing, lifetimes</li>
+            <li>segurança de memória verificada em compilação</li>
+            <li>abstrações modernas</li>
+            <li>concorrência segura via tipos, <code>Send</code> e <code>Sync</code></li>
+            <li>abstrações que <b>podem</b> ser eliminadas pelo compilador</li>
+          </ul>
+        </div>
+      </div>
+      <div class="frag" data-f="2">
+        <div class="diagnostic warn sm">
+<span class="d-warn">warning</span><span class="d-msg">: zero-cost não significa que toda abstração gera o melhor assembly possível</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: significa que abstrações <b>podem</b> ser eliminadas — e isso se mede caso a caso</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- 8b -->
+  <section class="slide" id="c8b" data-chapter="8" data-budget="10"
+           data-file="target/release/melhor_linguagem" data-title="Finished · o programa executa"
+           data-log="Finished `release` profile [optimized]" data-log-v="ok" data-finish="1">
+    <div class="slide-head">
+      <span class="slide-file"><b>target/release/</b>melhor_linguagem</span>
+      <span class="slide-tag">slide 8 / 8 · fim</span>
+    </div>
+    <div class="slide-body center">
+      <div class="term" style="font-size:26px;line-height:1.62">
+<span class="good">    Finished</span> <span class="cmd">`release` profile [optimized] target(s) in 5.00s</span>
+<span class="info">     Running</span> <span class="cmd">`target/release/melhor_linguagem`</span>
+
+<span class="frag" data-f="1"><span class="out">Todo mundo pode ter a sua opinião...</span></span>
+<span class="frag" data-f="2"><b style="color:var(--rust-soft);font-size:34px">...mas a minha é a melhor.</b></span>
+
+<span class="frag" data-f="3"><span class="good">Process finished with exit code 0</span></span></div>
+
+      <div class="frag" data-f="3" style="margin-top:20px">
+        <div class="row" style="align-items:center;gap:40px">
+          <h1 class="big" style="font-size:78px">Rust<img class="ferris-inline" src="assets/img/ferris.png" alt=""></h1>
+          <div class="col" style="gap:8px">
+            <h2 class="sub" style="font-size:38px">Um compilador que exige provas.</h2>
+            <p class="footnote"><code>C++ = Rust--</code> · Nathan Pinheiro · TCC00304</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RAMIFICAÇÕES (slides-reserva) ================= -->
+
+  <!-- Backup A -->
+  <section class="slide" id="bA" data-chapter="5" data-branch="A" data-budget="0"
+           data-file="backup/option.rs" data-title="Backup A — Option&lt;T&gt; vs NULL">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>option.rs</span>
+      <span class="slide-tag">reserva A · ausência de valor</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">A ausência de valor é um <em>tipo</em></h2>
+      <div class="grid2" style="align-items:start">
+        <div class="code sm">
+          <div class="code-head" data-l="rust"><span class="dot"></span> rust <span class="lang">rust</span></div>
+<pre><code data-lang="rust">enum Option&lt;T&gt; {
+    None,
+    Some(T),
+}
+
+fn primeiro(v: &amp;[i32]) -&gt; Option&lt;&amp;i32&gt; {
+    v.first()
+}
+
+match primeiro(&amp;dados) {
+    Some(n) =&gt; println!("{n}"),
+    None    =&gt; println!("vazio"),
+}</code></pre>
+        </div>
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="cpp"><span class="dot"></span> outras formas de dizer "pode não ter" <span class="lang">c / c++</span></div>
+<pre><code data-lang="cpp">NULL                 // C
+nullptr              // C++
+std::optional&lt;T&gt;     // C++17</code></pre>
+          </div>
+          <div class="diagnostic ok xs">
+<span class="d-note">note</span><span class="d-msg">: em Rust a possibilidade de ausência aparece no tipo</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: o compilador exige que o caso `None` seja tratado
+<span class="d-gut">  =</span> <span class="d-note">note</span>: `std::optional` também expressa isso em C++;
+<span class="d-gut">   </span>       a diferença é ser o padrão da linguagem</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Backup B -->
+  <section class="slide" id="bB" data-chapter="5" data-branch="B" data-budget="0"
+           data-file="backup/result.rs" data-title="Backup B — Result&lt;T, E&gt; e o `?`">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>result.rs</span>
+      <span class="slide-tag">reserva B · erros</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Erro é valor de retorno, não desvio invisível</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="code sm">
+          <div class="code-head" data-l="rust"><span class="dot"></span> rust <span class="lang">rust</span></div>
+<pre><code data-lang="rust">fn carregar() -&gt; Result&lt;String, std::io::Error&gt; {
+    let texto = std::fs::read_to_string("arquivo.txt")?;
+    Ok(texto)
+}</code></pre>
+        </div>
+        <div class="col">
+          <div class="flow" style="font-size:22px">
+            <div class="step"><b>Result&lt;T, E&gt;</b> — ou o valor, ou o erro</div>
+            <div class="arrow">↓</div>
+            <div class="step">o operador <b>?</b> propaga o erro</div>
+            <div class="arrow">↓</div>
+            <div class="step end">ignorar o erro exige escrever isso explicitamente</div>
+          </div>
+          <div class="diagnostic ok xs">
+<span class="d-note">note</span><span class="d-msg">: `Result` é apenas um enum — tratar erro é usar o</span>
+<span class="d-gut">   </span>         <span class="d-msg">sistema de tipos</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: `?` retorna cedo em caso de erro, convertendo o
+<span class="d-gut">   </span>       tipo quando possível</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Backup C -->
+  <section class="slide" id="bC" data-chapter="5" data-branch="C" data-budget="0"
+           data-file="backup/strings.rs" data-title="Backup C — Strings">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>strings.rs</span>
+      <span class="slide-tag">reserva C · strings</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Strings</h2>
+      <div class="grid3" style="align-items:start">
+        <div class="code sm">
+          <div class="code-head" data-l="c"><span class="dot"></span> c <span class="lang">c</span></div>
+<pre><code data-lang="c">char *s = "ola";
+size_t n = strlen(s);
+// tamanho, terminador e
+// dono são sua responsabilidade</code></pre>
+        </div>
+        <div class="code sm">
+          <div class="code-head" data-l="cpp"><span class="dot"></span> rust-- <span class="lang">c++</span></div>
+<pre><code data-lang="cpp">std::string s = "ola";
+auto n = s.size();
+// RAII: dono e tamanho
+// gerenciados pelo tipo</code></pre>
+        </div>
+        <div class="code sm hl">
+          <div class="code-head" data-l="rust"><span class="dot"></span> rust <span class="lang">rust</span></div>
+<pre><code data-lang="rust">let s: String = "ola".to_string();
+let vista: &amp;str = &amp;s;
+// String  = dona, heap
+// &amp;str    = emprestada</code></pre>
+        </div>
+      </div>
+      <div class="diagnostic ok sm">
+<span class="d-note">note</span><span class="d-msg">: a distinção `String` / `&amp;str` é a mesma distinção de ownership vs borrowing</span>
+<span class="d-gut">  =</span> <span class="d-help">help</span>: `String` é dona do buffer; `&amp;str` é uma vista emprestada e válida</div>
+    </div>
+  </section>
+
+  <!-- Backup F -->
+  <section class="slide" id="bF" data-chapter="7" data-branch="F" data-budget="0"
+           data-file="backup/asm_dispatch.s" data-title="Backup F — ASM do dispatch (validado)">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>asm_dispatch.s</span>
+      <span class="slide-tag">reserva F · quanto custa?</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Quanto custa cada despacho, em instruções?</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="asm"><span class="dot" style="background:var(--green)"></span> static dispatch <span class="lang">x86-64</span></div>
+<pre><code data-lang="asm">executar_statico:
+    lea eax, [rsi + rsi]
+    ret</code></pre>
+          </div>
+          <p class="footnote">a chamada de <code>calcular()</code> desapareceu: o compilador conhecia <code>Dobro</code> e inlinou <code>x * 2</code>.</p>
+        </div>
+        <div class="col">
+          <div class="code sm">
+            <div class="code-head" data-l="asm"><span class="dot" style="background:var(--yellow)"></span> dynamic dispatch <span class="lang">x86-64</span></div>
+<pre><code data-lang="asm">executar_dinamico:
+    mov rax, qword ptr [rdi]
+    mov rax, qword ptr [rax]
+    jmp rax</code></pre>
+          </div>
+          <p class="footnote">carrega o ponteiro da vtable, carrega o método, salta indiretamente.</p>
+        </div>
+      </div>
+      <div class="seal-row">
+        <span class="seal direct"><b>validado diretamente</b> clang++ 17.0.0 · -O3 -std=c++20 -S -masm=intel</span>
+        <span class="seal source"><b>fonte primária</b> Rust Reference (vtable em <code>dyn Trait</code>)</span>
+      </div>
+      <div class="diagnostic warn sm">
+<span class="d-warn">warning</span><span class="d-msg">: este assembly é do experimento C++ deste pacote</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: a parte conceitual de Rust (monomorfização, trait object, vtable) vem da
+<span class="d-gut">   </span>       documentação oficial — o ASM de Rust <b>não</b> foi recompilado aqui
+<span class="d-gut">  =</span> <span class="d-note">note</span>: dynamic dispatch <b>pode</b> ser devirtualizado por compiladores em outros casos</div>
+    </div>
+  </section>
+
+  <!-- Backup D -->
+  <section class="slide" id="bD" data-chapter="7" data-branch="D" data-budget="0"
+           data-file="backup/zero_cost.md" data-title="Backup D — Zero-cost e o binário">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>zero_cost.md</span>
+      <span class="slide-tag">reserva D · zero-cost abstractions</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Mais abstração = mais trabalho para a CPU?</h2>
+      <div class="grid3" style="align-items:start">
+        <div class="panel">
+          <h4 style="color:var(--green)">C / C++ imperativo <span class="badge st">191 B</span></h4>
+          <p class="footnote"><code>loop com índice, soma acumulada</code></p>
+          <div class="term" style="font-size:15px;line-height:1.6">.text ...... <b class="good">191 bytes</b>
+sha256 ..... 164c082a…37fc1d8
+instruções . 62</div>
+        </div>
+        <div class="panel">
+          <h4 style="color:var(--green)">C / C++ com abstração <span class="badge st">191 B</span></h4>
+          <p class="footnote"><code>fold_indexed + template + lambda</code></p>
+          <div class="term" style="font-size:15px;line-height:1.6">.text ...... <b class="good">191 bytes</b>
+sha256 ..... 164c082a…37fc1d8
+diff ....... <b class="good">IDENTICAL</b></div>
+        </div>
+        <div class="panel">
+          <h4 style="color:var(--yellow)">C++ <code>std::views</code> <span class="badge dy">119 B</span></h4>
+          <p class="footnote"><code>iota | filter | transform + accumulate</code></p>
+          <div class="term" style="font-size:15px;line-height:1.6">.text ...... <b style="color:var(--yellow)">119 bytes</b>
+sha256 ..... ecd9de25…14146ad0
+diff ....... <b style="color:var(--yellow)">DIFFERENT</b> · 39 instr.</div>
+        </div>
+      </div>
+      <div class="seal-row">
+        <span class="seal direct"><b>validado diretamente</b> clang / clang++ 17.0.0 · -O3 -std=c++20</span>
+        <span class="seal"><b>atenção</b> menor não quer dizer mais rápido</span>
+      </div>
+      <div class="frag" data-f="1">
+        <p class="thesis" style="font-size:32px">Abstração para você. Não necessariamente para a CPU.</p>
+      </div>
+      <div class="frag" data-f="2">
+        <div class="diagnostic warn xs">
+<span class="d-warn">warning</span><span class="d-msg">: o experimento prova apenas que o binário não ficou idêntico</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: `std::views` foi totalmente inlinado — não sobrou `call` no corpo
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: 119 bytes não é "mais rápido"; 191 bytes não é "mais rápido"</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Backup D2 -->
+  <section class="slide" id="bD2" data-chapter="7" data-branch="D2" data-budget="0"
+           data-file="backup/zero_cost_rust.md" data-title="Backup D2 — Zero-cost: e o Rust?">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>zero_cost_rust.md</span>
+      <span class="slide-tag">reserva D2 · e o Rust?</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">E o pipeline equivalente em Rust?</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="code sm">
+          <div class="code-head" data-l="rust"><span class="dot"></span> mesmo cálculo, estilo funcional <span class="lang">rust</span></div>
+<pre><code data-lang="rust">pub fn pontuacao(numeros: &amp;[u32], limite: u32) -&gt; u64 {
+    numeros
+        .iter()
+        .enumerate()
+        .filter(|(_, n)| **n &gt;= limite)
+        .map(|(i, n)| (i as u64 + 1) * (*n as u64))
+        .sum()
+}</code></pre>
+          <p class="footnote" style="margin-top:12px">usa borrowing, slice, iteradores, <code>enumerate</code>, closures, <code>filter</code>, <code>map</code> e <code>sum</code>.</p>
+        </div>
+        <div class="col">
+          <div class="diagnostic warn sm">
+<span class="d-warn">warning</span><span class="d-msg">: o assembly desta função NÃO foi reproduzido</span>
+<span class="d-gut">   </span>         <span class="d-msg">no pacote de validação</span>
+<span class="d-gut">  =</span> <span class="d-note">note</span>: `rustc` não estava instalado no ambiente
+<span class="d-gut">  =</span> <span class="d-note">note</span>: em experimento anterior foi <b>reportado</b> como
+<span class="d-gut">   </span>       convergindo para o mesmo corpo do loop C/C++
+<span class="d-gut">  =</span> <span class="d-help">help</span>: recompilar em godbolt.org antes de afirmar
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: não dizer "idêntico", "byte por byte" nem
+<span class="d-gut">   </span>          "mesmo SHA-256" a respeito do Rust</div>
+          <div class="seal-row">
+            <span class="seal unval"><b>não reproduzido</b> rustc ausente no ambiente de validação</span>
+            <span class="seal source"><b>fonte primária</b> conceito de zero-cost: docs oficiais</span>
+          </div>
+          <p class="thesis" style="font-size:28px">Zero-cost não significa que qualquer abstração vira o código mais rápido possível. <em>Precisamos medir.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Backup E -->
+  <section class="slide" id="bE" data-chapter="7" data-branch="E" data-budget="0"
+           data-file="backup/avx2.md" data-title="Backup E — AVX2 / vetorização">
+    <div class="slide-head">
+      <span class="slide-file"><b>backup/</b>avx2.md</span>
+      <span class="slide-tag">reserva E · SIMD</span>
+    </div>
+    <div class="slide-body">
+      <h2 class="title">Vetorização com AVX2</h2>
+      <div class="grid2" style="align-items:start">
+        <div class="col">
+          <div class="term" style="font-size:19px">
+<span class="prompt">$</span> <span class="cmd">clang  -O3 -mavx2 -S  pontuacao.c</span>
+<span class="prompt">$</span> <span class="cmd">clang++ -O3 -mavx2 -S pontuacao.cpp</span>
+
+<span class="out">linhas de assembly com </span><b class="info">ymm</b><span class="out">:  67   (C e C++)</span>
+<span class="out">.text:                     </span><b class="good">730 bytes</b><span class="out">  (C e C++)</span>
+<span class="out">SHA-256: 804e99c18caecb83…49811fac</span>
+<b class="good">C AVX2 == C++ AVX2</b><span class="out">  — byte por byte</span></div>
+          <div class="seal-row" style="margin-top:14px">
+            <span class="seal direct"><b>validado diretamente</b> clang 17.0.0 · -O3 -mavx2</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="diagnostic ok sm">
+<span class="d-note">note</span><span class="d-msg">: com AVX2 habilitado, as versões C e C++ deste experimento foram
+<span class="d-gut">   </span>       vetorizadas e produziram `.text` idêntico</span></div>
+          <div class="diagnostic warn sm">
+<span class="d-warn">warning</span><span class="d-msg">: a versão Rust NÃO foi recompilada neste pacote</span>
+<span class="d-gut">  =</span> <span class="d-warn">warning</span>: a contagem de registradores `ymm` <b>não é um número universal</b> —
+<span class="d-gut">   </span>       depende de versão do compilador, código, flags, backend, target e
+<span class="d-gut">   </span>       da forma de contar</div>
+          <div class="seal-row"><span class="seal unval"><b>não reproduzido</b> parte Rust do experimento AVX2</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ================= RODAPÉ DE DIAGNÓSTICOS ================= -->
+  <footer id="diag">
+    <div id="log"></div>
+    <div id="pinned"><span class="w">warning</span>: crate `cpp` renamed to `rust--` for this presentation
+  <span class="n">= note</span>: `#[allow(opinion)]` on by default</div>
+  </footer>
+
+  <!-- ================= OVERLAYS ================= -->
+  <div id="recompile">
+    <div class="rc-title"></div>
+    <div class="rc-stream"></div>
+  </div>
+  <div id="errflash"></div>
+
+  <div class="overlay" id="overview">
+    <h3>Mapa da apresentação</h3>
+    <div class="ov-grid"></div>
+    <p class="hint">clique num slide para ir · <kbd>O</kbd> ou <kbd>Esc</kbd> fecha</p>
+  </div>
+
+  <div class="overlay" id="help">
+    <h3>Atalhos</h3>
+    <div class="keys">
+      <div><kbd>→</kbd><kbd>Space</kbd><span>avança passo / slide</span></div>
+      <div><kbd>←</kbd><kbd>Bksp</kbd><span>volta passo / slide</span></div>
+      <div><kbd>↓</kbd><span>entra nos slides-reserva do capítulo</span></div>
+      <div><kbd>↑</kbd><span>volta para a trilha principal</span></div>
+      <div><kbd>O</kbd><span>mapa da apresentação</span></div>
+      <div><kbd>G</kbd><span>ir para o slide nº …</span></div>
+      <div><kbd>P</kbd><span>abre a janela do apresentador</span></div>
+      <div><kbd>N</kbd><span>notas na própria tela (fallback)</span></div>
+      <div><kbd>F</kbd><span>tela cheia</span></div>
+      <div><kbd>M</kbd><span>liga / desliga o áudio</span></div>
+      <div><kbd>R</kbd><span>reduz animação</span></div>
+      <div><kbd>T</kbd><span>zera o cronômetro</span></div>
+      <div><kbd>Home</kbd><kbd>End</kbd><span>primeiro / último slide</span></div>
+      <div><kbd>?</kbd><span>esta ajuda</span></div>
+    </div>
+    <h3 style="margin-top:34px;font-size:24px">Slides-reserva</h3>
+    <div class="keys" id="help-branches"></div>
+    <p class="hint"><kbd>?</kbd> ou <kbd>Esc</kbd> fecha</p>
+  </div>
+
+  <aside id="inline-notes"></aside>
+  <div id="toast"></div>
+  <div id="branch-hint"><kbd>↓</kbd> <span id="branch-hint-text"></span></div>
+
+</div>
+</div>
+
+<script src="assets/notes.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>

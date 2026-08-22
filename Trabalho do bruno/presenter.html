@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Apresentador — melhor_linguagem</title>
+<style>
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('assets/fonts/jetbrains-mono-var-latin.woff2') format('woff2');
+  font-weight: 100 800; font-display: swap;
+}
+:root {
+  --bg:#0b0e14; --panel:#11151f; --panel2:#161b27; --line:#1e2634;
+  --fg:#c9d1d9; --fg2:#eaf0f7; --dim:#7d8590; --faint:#4b5563;
+  --rust:#f74c00; --rust-soft:#ff7a3c;
+  --red:#ff6b6b; --yellow:#ffcc66; --green:#86e08a; --cyan:#6bd6ff;
+  --mono:'JetBrains Mono','Cascadia Mono',Consolas,ui-monospace,monospace;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:var(--mono); font-size:15px;
+  display:grid; grid-template-rows:auto 1fr auto; height:100vh; overflow:hidden;
+}
+
+/* ---------- topo ---------- */
+header {
+  display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center;
+  padding:12px 18px; background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border-bottom:1px solid var(--line);
+}
+.hl { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.hl .meta { color:var(--faint); font-size:13px; }
+.hl .meta b { color:var(--dim); font-weight:500; }
+.hl .title { font-size:26px; font-weight:800; color:var(--fg2); letter-spacing:-.6px;
+             white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hl .title .bk { color:var(--yellow); }
+
+.clocks { display:flex; gap:14px; }
+.clock {
+  background:#0a0d13; border:1px solid var(--line); border-radius:8px;
+  padding:8px 16px; min-width:150px; text-align:right;
+}
+.clock .k { font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:var(--faint); }
+.clock .v { font-size:30px; font-weight:800; font-variant-numeric:tabular-nums; color:var(--fg2); line-height:1.1; }
+.clock .s { font-size:12px; color:var(--dim); }
+.clock.ok   { border-color:#24503a; } .clock.ok   .v { color:var(--green); }
+.clock.warn { border-color:#5a4416; } .clock.warn .v { color:var(--yellow); }
+.clock.bad  { border-color:#5a1f1f; } .clock.bad  .v { color:var(--red); }
+
+/* ---------- corpo ---------- */
+main { display:grid; grid-template-columns:1.55fr 1fr; gap:14px; padding:14px 18px; min-height:0; }
+.col { display:flex; flex-direction:column; gap:14px; min-height:0; overflow:auto; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:13px 16px; }
+.card > h4 {
+  margin:0 0 9px; font-size:11px; letter-spacing:1.6px; text-transform:uppercase; color:var(--faint);
+  display:flex; align-items:center; gap:8px;
+}
+.card ul { margin:0; padding-left:20px; }
+.card li { margin-bottom:8px; line-height:1.5; }
+.card li:last-child { margin-bottom:0; }
+.card code { color:var(--rust-soft); }
+.card b { color:var(--fg2); }
+
+.card.notes  { border-left:3px solid var(--cyan); }
+.card.notes li { font-size:17px; line-height:1.55; }
+.card.jokes  { border-left:3px solid var(--yellow); }
+.card.jokes li { color:var(--yellow); font-size:16px; }
+.card.jokes .opt { color:var(--faint); font-size:12px; }
+.card.avoid  { border-left:3px solid var(--red); }
+.card.avoid li { color:var(--red); font-size:15px; }
+.card.ev     { border-left:3px solid var(--green); }
+.card.ev li  { font-size:13px; color:var(--dim); }
+.card.ev .lv { font-weight:800; }
+.lv.direct { color:var(--green); } .lv.source { color:var(--cyan); } .lv.unval { color:var(--yellow); }
+
+/* progresso do slide */
+.steps { display:flex; gap:5px; flex-wrap:wrap; }
+.steps i { width:26px; height:6px; border-radius:3px; background:#232b3a; }
+.steps i.on { background:var(--rust); }
+
+.nextbox { display:flex; flex-direction:column; gap:5px; }
+.nextbox .lab { font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:var(--faint); }
+.nextbox .val { font-size:19px; color:var(--fg2); font-weight:700; }
+
+/* índice */
+.idx { display:flex; flex-direction:column; gap:3px; }
+.idx button {
+  all:unset; cursor:pointer; display:grid; grid-template-columns:52px 1fr auto; gap:9px;
+  padding:5px 8px; border-radius:5px; font-family:var(--mono); font-size:13px; color:var(--dim);
+}
+.idx button:hover { background:var(--panel2); color:var(--fg2); }
+.idx button.cur { background:#1b2030; color:var(--fg2); box-shadow:inset 0 0 0 1px var(--rust); }
+.idx button .n { color:var(--faint); }
+.idx button .b { color:var(--faint); font-size:12px; }
+.idx .sep { font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:var(--faint);
+            margin:8px 0 3px; border-bottom:1px solid var(--line); padding-bottom:4px; }
+
+/* ---------- rodapé ---------- */
+footer {
+  display:flex; align-items:center; gap:9px; padding:10px 18px;
+  border-top:1px solid var(--line); background:var(--panel);
+}
+footer button {
+  all:unset; cursor:pointer; font-family:var(--mono); font-size:14px;
+  padding:7px 14px; border-radius:6px; border:1px solid var(--line);
+  background:var(--panel2); color:var(--fg);
+}
+footer button:hover { border-color:var(--rust); color:var(--fg2); }
+footer .sp { flex:1; }
+footer .st { color:var(--faint); font-size:13px; }
+footer .st b { color:var(--green); }
+footer .st.off b { color:var(--red); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hl">
+    <div class="meta"><b id="m-unit">—</b> · capítulo <b id="m-ch">—</b> · <span id="m-file"></span></div>
+    <div class="title" id="m-title">aguardando o deck…</div>
+    <div class="steps" id="m-steps"></div>
+  </div>
+  <div class="clocks">
+    <div class="clock" id="c-slide"><div class="k">neste slide</div><div class="v">0s</div><div class="s">alvo —</div></div>
+    <div class="clock" id="c-total"><div class="k">total</div><div class="v">0:00</div><div class="s">alvo —</div></div>
+  </div>
+</header>
+
+<main>
+  <div class="col">
+    <div class="card notes" id="p-notes"><h4>notas de apresentação</h4><div class="body"></div></div>
+    <div class="card jokes" id="p-jokes"><h4>piadas</h4><div class="body"></div></div>
+    <div class="card avoid" id="p-avoid"><h4>não dizer</h4><div class="body"></div></div>
+    <div class="card ev"    id="p-ev"><h4>procedência</h4><div class="body"></div></div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <h4>próximo passo</h4>
+      <div class="nextbox"><div class="val" id="p-next">—</div></div>
+      <div style="margin-top:10px" id="p-branches"></div>
+    </div>
+    <div class="card">
+      <h4>ir para</h4>
+      <div class="idx" id="p-idx"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <button id="b-prev">← voltar</button>
+  <button id="b-next">avançar →</button>
+  <button id="b-down">↓ reserva</button>
+  <button id="b-up">↑ trilha</button>
+  <button id="b-reset">zerar cronômetro</button>
+  <button id="b-mute">áudio</button>
+  <span class="sp"></span>
+  <span class="st" id="p-link"><b>●</b> conectado</span>
+</footer>
+
+<script>
+(function () {
+'use strict';
+var $ = function (s) { return document.querySelector(s); };
+var bc = null;
+try { bc = new BroadcastChannel('melhor_linguagem'); } catch (e) { bc = null; }
+
+var last = null;
+var slideId = null;
+var slideT0 = Date.now();
+var lastSeen = 0;
+
+function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* --- envio de comandos: referência direta à janela do deck, com BC como reserva --- */
+function cmd(c, arg) {
+  var sent = false;
+  try {
+    if (window.opener && !window.opener.closed && window.opener.__deckBridge) {
+      window.opener.__deckBridge.cmd(c, arg); sent = true;
+    }
+  } catch (e) {}
+  if (!sent && bc) { try { bc.postMessage({ type:'cmd', cmd:c, arg:arg }); } catch (e) {} }
+}
+
+/* --- recepção --- */
+window.__deckOnState = function (st) { lastSeen = Date.now(); render(st); };
+if (bc) {
+  bc.onmessage = function (e) {
+    var d = e.data || {};
+    if (d.type === 'state') { lastSeen = Date.now(); render(d.st); }
+  };
+  try { bc.postMessage({ type: 'hello' }); } catch (e) {}
+}
+// puxa o estado inicial direto do opener
+(function pull() {
+  try {
+    if (window.opener && !window.opener.closed && window.opener.__deckBridge) {
+      render(window.opener.__deckBridge.getState()); lastSeen = Date.now(); return;
+    }
+  } catch (e) {}
+  setTimeout(pull, 200);
+})();
+
+/* --- render --- */
+function fmt(ms) {
+  var s = Math.max(0, Math.round(ms / 1000));
+  var m = Math.floor(s / 60);
+  return m + ':' + String(s % 60).padStart(2, '0');
+}
+
+function listHTML(arr, mapper) {
+  if (!arr || !arr.length) return '<div style="color:var(--faint);font-size:13px">—</div>';
+  return '<ul>' + arr.map(mapper).join('') + '</ul>';
+}
+
+function render(st) {
+  if (!st) return;
+  last = st;
+
+  if (st.id !== slideId) { slideId = st.id; slideT0 = Date.now(); }
+
+  $('#m-unit').textContent = st.branch ? ('reserva ' + st.branch) : ('unit ' + st.unit + '/' + st.units);
+  $('#m-ch').textContent = st.chapter;
+  $('#m-file').textContent = st.file;
+  $('#m-title').innerHTML = (st.branch ? '<span class="bk">[reserva ' + esc(st.branch) + ']</span> ' : '') + esc(st.title);
+
+  var steps = '';
+  for (var i = 0; i <= st.maxF; i++) steps += '<i class="' + (i <= st.f ? 'on' : '') + '"></i>';
+  $('#m-steps').innerHTML = steps;
+
+  var n = st.notes || {};
+  $('#p-notes .body').innerHTML = listHTML(n.notes, function (t) { return '<li>' + t + '</li>'; });
+  $('#p-jokes .body').innerHTML = listHTML(n.jokes, function (j) {
+    var txt = (typeof j === 'string') ? j : j.t;
+    var opt = (typeof j !== 'string' && j.opt) ? ' <span class="opt">(opcional)</span>' : '';
+    return '<li>' + txt + opt + '</li>';
+  });
+  $('#p-avoid .body').innerHTML = listHTML(n.avoid, function (t) { return '<li>' + t + '</li>'; });
+  $('#p-ev .body').innerHTML = listHTML(n.evidence, function (e) {
+    var lab = e.lvl === 'direct' ? 'validado diretamente'
+            : e.lvl === 'unval'  ? 'NÃO validado' : 'fonte primária';
+    return '<li><span class="lv ' + e.lvl + '">' + lab + '</span> — ' + e.t + '</li>';
+  });
+
+  $('#p-next').textContent = st.nextTitle || '—';
+
+  $('#p-branches').innerHTML = (st.branchList && st.branchList.length)
+    ? '<div style="font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--faint);margin-bottom:6px">reservas deste capítulo</div>'
+      + st.branchList.map(function (b) {
+          return '<div style="font-size:13px;color:var(--yellow)">↓ ' + esc(b.k) + ' — ' + esc(b.t) + '</div>';
+        }).join('')
+    : '';
+
+  // índice
+  var idx = $('#p-idx');
+  if (idx.dataset.n !== String((st.index || []).length)) {
+    idx.dataset.n = String((st.index || []).length);
+    var html = '', inBk = false;
+    (st.index || []).forEach(function (r) {
+      var isB = String(r.n).indexOf('res.') === 0;
+      if (isB && !inBk) { html += '<div class="sep">slides-reserva</div>'; inBk = true; }
+      html += '<button data-id="' + r.id + '"><span class="n">' + esc(r.n) + '</span>' +
+              '<span>' + esc(r.t) + '</span><span class="b">' + (r.b ? r.b + 's' : '') + '</span></button>';
+    });
+    idx.innerHTML = html;
+    idx.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-id]');
+      if (b) cmd('goto', b.dataset.id);
+    });
+  }
+  Array.prototype.forEach.call(idx.querySelectorAll('button'), function (b) {
+    b.classList.toggle('cur', b.dataset.id === st.id);
+  });
+
+  $('#b-mute').textContent = st.audio ? 'áudio ligado' : 'áudio mudo';
+
+  tick();
+}
+
+/* --- relógios --- */
+function tick() {
+  var st = last;
+  if (!st) return;
+
+  // tempo neste slide vs orçamento
+  var sl = Date.now() - slideT0;
+  var bud = st.budget || 0;
+  var cs = $('#c-slide');
+  cs.querySelector('.v').textContent = Math.round(sl / 1000) + 's';
+  cs.querySelector('.s').textContent = bud ? ('alvo ' + bud + 's') : 'fora do tempo principal';
+  cs.className = 'clock' + (!bud ? '' : sl > bud * 1000 * 1.25 ? ' bad' : sl > bud * 1000 ? ' warn' : ' ok');
+
+  // total vs alvo acumulado até este slide
+  var ct = $('#c-total');
+  var el = st.running ? st.elapsed : 0;
+  ct.querySelector('.v').textContent = fmt(el);
+  var acc = 0, total = 0, found = false;
+  (st.index || []).forEach(function (r) {
+    if (String(r.n).indexOf('res.') === 0) return;
+    total += r.b;
+    if (!found) { acc += r.b; if (r.id === (st.branch ? null : st.id)) found = true; }
+  });
+  if (!found) acc = total;
+  ct.querySelector('.s').textContent = 'alvo ' + fmt(acc * 1000) + ' / ' + fmt(total * 1000);
+  ct.className = 'clock' + (!st.running ? '' : el > acc * 1000 * 1.2 ? ' bad' : el > acc * 1000 ? ' warn' : ' ok');
+
+  var link = $('#p-link');
+  var live = (Date.now() - lastSeen) < 2500;
+  link.className = 'st' + (live ? '' : ' off');
+  link.innerHTML = '<b>●</b> ' + (live ? 'conectado ao deck' : 'sem sinal do deck');
+}
+setInterval(tick, 250);
+
+/* --- controles --- */
+$('#b-prev').onclick  = function () { cmd('prev'); };
+$('#b-next').onclick  = function () { cmd('next'); };
+$('#b-down').onclick  = function () { cmd('down'); };
+$('#b-up').onclick    = function () { cmd('up'); };
+$('#b-reset').onclick = function () { cmd('resetTimer'); slideT0 = Date.now(); };
+$('#b-mute').onclick  = function () { cmd('mute'); };
+
+addEventListener('keydown', function (e) {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter') { cmd('next'); e.preventDefault(); }
+  else if (k === 'ArrowLeft' || k === 'Backspace' || k === 'PageUp') { cmd('prev'); e.preventDefault(); }
+  else if (k === 'ArrowDown') { cmd('down'); e.preventDefault(); }
+  else if (k === 'ArrowUp')   { cmd('up');   e.preventDefault(); }
+  else if (k.toLowerCase() === 't') { cmd('resetTimer'); slideT0 = Date.now(); }
+  else if (k.toLowerCase() === 'm') { cmd('mute'); }
+});
+
+addEventListener('beforeunload', function () { try { if (bc) bc.close(); } catch (e) {} });
+})();
+</script>
+</body>
+</html>
